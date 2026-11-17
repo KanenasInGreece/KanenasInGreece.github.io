@@ -1,51 +1,131 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-  <title>Articles & Research</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KanenasInGreece — Research</title>
+  <meta name="description" content="Research notes kept with the KanenasInGreece repositories and written under Oratotis. One measurement, dated 9 November 2026, of what GLiNER2.5-Decide costs on Shared Memory searches. Whether the verdict is accurate is still open.">
   <style>
-    body {
-      font-family: system-ui, sans-serif;
-      max-width: 800px;
-      margin: 60px auto;
-      padding: 0 20px;
-      line-height: 1.7;
-      color: #252525;
+    :root {
+      --paper: #0d1117;
+      --ink: #e6edf3;
+      --muted: #9198a1;
+      --rule: #3d444d;
+      --panel: #151b23;
+      --accent: #4493f8;
+      --motto: #b1bac4;
+      color-scheme: dark;
     }
-    a { color: #175ca5; }
-    h1 { margin-bottom: 0; }
-    .subtitle { color: #666; }
-    article {
-      padding: 20px 0;
-      border-bottom: 1px solid #ddd;
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 1.125rem/1.6 Georgia, "Iowan Old Style", Palatino, "Palatino Linotype", serif;
+    }
+    .band { border-bottom: 1px solid var(--rule); color: var(--motto); }
+    .band-inner,
+    main,
+    .colophon {
+      width: min(40rem, 100%);
+      margin-inline: auto;
+      padding-inline: max(1.25rem, env(safe-area-inset-left, 0px)) max(1.25rem, env(safe-area-inset-right, 0px));
+    }
+    .band-inner { padding-block: 1.75rem 1.5rem; }
+    .place {
+      margin: 0 0 0.85rem;
+      font: 600 0.78rem/1.4 system-ui, sans-serif;
+      letter-spacing: 0.02em;
+    }
+    .place a { color: var(--accent); overflow-wrap: anywhere; }
+    .mark { display: inline-block; }
+    .mark img {
+      display: block;
+      width: min(16.5rem, 100%);
+      height: auto;
+    }
+    .motto {
+      margin: 0.85rem 0 0;
+      font: 600 0.78rem/1.4 system-ui, sans-serif;
+      letter-spacing: 0.03em;
+    }
+    main { padding-block: 2.5rem 1.25rem; }
+    h1 {
+      margin: 0 0 1.25rem;
+      font: 600 0.75rem/1.4 system-ui, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .posted {
+      margin: 0 0 0.35rem;
+      font: 600 0.82rem/1.4 system-ui, sans-serif;
+      color: var(--muted);
+    }
+    h2 {
+      margin: 0 0 0.65rem;
+      font: 600 1.5rem/1.25 system-ui, sans-serif;
+      letter-spacing: -0.015em;
+      text-wrap: balance;
+    }
+    h2 a { color: inherit; text-underline-offset: 0.16em; }
+    h2 a:hover { color: var(--accent); }
+    .preamble { margin: 0; }
+    .colophon {
+      padding-block: 1.5rem 3rem;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+    .colophon p { margin: 0 0 0.85rem; }
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 1.15rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font: 600 0.95rem/1.4 system-ui, sans-serif;
+    }
+    nav a { color: var(--accent); text-underline-offset: 0.15em; }
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Articles & Research</h1>
-    <p class="subtitle">
-      AI engineering, software architecture,
-      experiments and professional observations.
-    </p>
+  <header class="band">
+    <div class="band-inner">
+      <p class="place">Part of <a rel="me noreferrer" href="https://github.com/KanenasInGreece">github.com/KanenasInGreece</a></p>
+      <a class="mark" href="/">
+        <img src="/assets/oratotis-lockup.png" width="601" height="152" alt="Oratotis">
+      </a>
+      <p class="motto">Design with Intent. Build with Clarity.</p>
+    </div>
   </header>
 
   <main>
-    <h2>Research</h2>
+    <h1>Research</h1>
     <article>
-      <h3>
-        <a href="/articles/ai/decision-models.html">
-          Search Sufficiency Verifier Benchmark
-        </a>
-      </h3>
-      <p>
-        Exploring the computational cost of
-        decision models for AI agent memory.
-      </p>
+      <p class="posted"><time datetime="2026-11-16">16 November 2026</time></p>
+      <h2>
+        <a href="/articles/ai/decision-models.html">What it costs to ask a small model whether search found the answer</a>
+      </h2>
+      <p class="preamble">When a Shared Memory search matches the wording of a question, the records may still not hold the answer. This note times GLiNER2.5-Decide making that check on real-length searches, measured 9 November 2026 on a desktop CPU and an Intel Arc Pro B70. It reports the cost, and how far the numbers can be trusted. It does not test whether the judgement is accurate.</p>
     </article>
   </main>
+
+  <footer class="colophon">
+    <p>Oratotis is a sole proprietorship. These notes are by Xenofon S. Motsenigos, from more than 30 years in personal computing and 15 years in business operations and industrial production.</p>
+    <nav aria-label="Profiles">
+      <ul>
+        <li><a rel="me noreferrer" href="https://www.youtube.com/@Oratotis">YouTube</a></li>
+        <li><a rel="me noreferrer" href="https://x.com/xsmotsenigos">X</a></li>
+        <li><a rel="me noreferrer" href="https://www.linkedin.com/in/xsmotsenigos">LinkedIn</a></li>
+        <li><a rel="me noreferrer" href="https://github.com/KanenasInGreece">GitHub</a></li>
+      </ul>
+    </nav>
+  </footer>
 </body>
 </html>

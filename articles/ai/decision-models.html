@@ -3,23 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Search Sufficiency Verifier Benchmark</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<title>What it costs to ask a small model whether search found the answer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <style>
 /* Layout: one reading column with wide figures; a masthead, then numbered-free sections in reading order. */
 :root{
-  --paper:#f3f5f4; --ink:#14191c; --muted:#56626a; --rule:#d3dadd; --panel:#e8eceb; --accent:#1f5f9e;
-  --c-cpu6:#9c6a3a; --c-cpu12:#c9893e; --c-sycl32:#245fa8; --c-sycl16:#4f9ad9; --c-vk:#7d4fb0;
+  --paper:#0d1117; --ink:#e6edf3; --muted:#9198a1; --rule:#3d444d; --panel:#151b23; --accent:#4493f8;
+  --c-cpu6:#c99a6a; --c-cpu12:#e5b071; --c-sycl32:#6d9fe0; --c-sycl16:#8fc4f0; --c-vk:#b190dd;
   --f-display:"Archivo",system-ui,sans-serif; --f-body:"Source Serif 4",Georgia,serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#111517; --ink:#e4e8ea; --muted:#9aa6ad; --rule:#2a3236; --panel:#1a2024; --accent:#79b0e6;
-  --c-cpu6:#c99a6a; --c-cpu12:#e5b071; --c-sycl32:#6d9fe0; --c-sycl16:#8fc4f0; --c-vk:#b190dd; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --paper:#111517; --ink:#e4e8ea; --muted:#9aa6ad; --rule:#2a3236; --panel:#1a2024; --accent:#79b0e6;
-  --c-cpu6:#c99a6a; --c-cpu12:#e5b071; --c-sycl32:#6d9fe0; --c-sycl16:#8fc4f0; --c-vk:#b190dd; color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 var(--f-body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
