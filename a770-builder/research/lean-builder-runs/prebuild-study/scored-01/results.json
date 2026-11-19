@@ -1,0 +1,315 @@
+{
+  "arms": {
+    "A": {
+      "assigned": 40,
+      "accepted": 31,
+      "resolved": 40,
+      "dispatched": 40,
+      "plan_proofs_passed": 0,
+      "median_end_to_end_seconds": 51.919548479956575,
+      "seconds_per_pass": 68.08120192536678,
+      "tokens_per_pass": 57457.87096774193
+    },
+    "B": {
+      "assigned": 40,
+      "accepted": 31,
+      "resolved": 40,
+      "dispatched": 40,
+      "plan_proofs_passed": 0,
+      "median_end_to_end_seconds": 87.31899965391494,
+      "seconds_per_pass": 120.82606925191583,
+      "tokens_per_pass": 96065.58064516129
+    },
+    "C": {
+      "assigned": 40,
+      "accepted": 3,
+      "resolved": 38,
+      "dispatched": 3,
+      "plan_proofs_passed": 3,
+      "median_end_to_end_seconds": 119.55535116401734,
+      "seconds_per_pass": 1319.9362759867217,
+      "tokens_per_pass": 957352.3333333334
+    }
+  },
+  "effects": [
+    {
+      "comparison": "B minus A",
+      "by_task": {
+        "balance": {
+          "both_pass": 1,
+          "first_only": 1,
+          "second_only": 3,
+          "both_fail": 0,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": 40.0,
+          "assigned_bounds_pp": [
+            40.0,
+            40.0
+          ]
+        },
+        "cap": {
+          "both_pass": 4,
+          "first_only": 0,
+          "second_only": 0,
+          "both_fail": 1,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": 0,
+          "assigned_bounds_pp": [
+            0,
+            0
+          ]
+        },
+        "clip": {
+          "both_pass": 4,
+          "first_only": 0,
+          "second_only": 1,
+          "both_fail": 0,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": 20.0,
+          "assigned_bounds_pp": [
+            20.0,
+            20.0
+          ]
+        },
+        "deadline": {
+          "both_pass": 2,
+          "first_only": 1,
+          "second_only": 2,
+          "both_fail": 0,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": 20.0,
+          "assigned_bounds_pp": [
+            20.0,
+            20.0
+          ]
+        },
+        "inside": {
+          "both_pass": 4,
+          "first_only": 1,
+          "second_only": 0,
+          "both_fail": 0,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": -20.0,
+          "assigned_bounds_pp": [
+            -20.0,
+            -20.0
+          ]
+        },
+        "renew": {
+          "both_pass": 3,
+          "first_only": 1,
+          "second_only": 1,
+          "both_fail": 0,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": 0,
+          "assigned_bounds_pp": [
+            0,
+            0
+          ]
+        },
+        "span": {
+          "both_pass": 4,
+          "first_only": 0,
+          "second_only": 0,
+          "both_fail": 1,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": 0,
+          "assigned_bounds_pp": [
+            0,
+            0
+          ]
+        },
+        "split": {
+          "both_pass": 2,
+          "first_only": 3,
+          "second_only": 0,
+          "both_fail": 0,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": -60.0,
+          "assigned_bounds_pp": [
+            -60.0,
+            -60.0
+          ]
+        }
+      },
+      "assigned_slots_per_arm": 40,
+      "resolved_slots": {
+        "A": 40,
+        "B": 40
+      },
+      "complete_pair_difference_pp": 0.0,
+      "assigned_bounds_pp": [
+        0.0,
+        0.0
+      ],
+      "interval_95_pp": [
+        -17.5,
+        15.000000000000002
+      ],
+      "degenerate_interval": false,
+      "interval_population": "fixed roster, complete pairs",
+      "leave_one_task_out_pp": {
+        "balance": -5.714285714285714,
+        "cap": 0.0,
+        "clip": -2.857142857142857,
+        "deadline": -2.857142857142857,
+        "inside": 2.857142857142857,
+        "renew": 0.0,
+        "span": 0.0,
+        "split": 8.571428571428571
+      },
+      "bootstrap_draws": 20000,
+      "bootstrap_seed": 20261120
+    },
+    {
+      "comparison": "C minus B",
+      "by_task": {
+        "balance": {
+          "both_pass": 2,
+          "first_only": 2,
+          "second_only": 0,
+          "both_fail": 1,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": -40.0,
+          "assigned_bounds_pp": [
+            -40.0,
+            -40.0
+          ]
+        },
+        "cap": {
+          "both_pass": 0,
+          "first_only": 4,
+          "second_only": 0,
+          "both_fail": 1,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": -80.0,
+          "assigned_bounds_pp": [
+            -80.0,
+            -80.0
+          ]
+        },
+        "clip": {
+          "both_pass": 0,
+          "first_only": 4,
+          "second_only": 0,
+          "both_fail": 0,
+          "assigned_pairs": 5,
+          "complete_pairs": 4,
+          "complete_pair_difference_pp": -100,
+          "assigned_bounds_pp": [
+            -100,
+            -80.0
+          ]
+        },
+        "deadline": {
+          "both_pass": 0,
+          "first_only": 4,
+          "second_only": 0,
+          "both_fail": 1,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": -80.0,
+          "assigned_bounds_pp": [
+            -80.0,
+            -80.0
+          ]
+        },
+        "inside": {
+          "both_pass": 0,
+          "first_only": 4,
+          "second_only": 0,
+          "both_fail": 1,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": -80.0,
+          "assigned_bounds_pp": [
+            -80.0,
+            -80.0
+          ]
+        },
+        "renew": {
+          "both_pass": 1,
+          "first_only": 2,
+          "second_only": 0,
+          "both_fail": 1,
+          "assigned_pairs": 5,
+          "complete_pairs": 4,
+          "complete_pair_difference_pp": -50.0,
+          "assigned_bounds_pp": [
+            -60.0,
+            -40.0
+          ]
+        },
+        "span": {
+          "both_pass": 0,
+          "first_only": 4,
+          "second_only": 0,
+          "both_fail": 1,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": -80.0,
+          "assigned_bounds_pp": [
+            -80.0,
+            -80.0
+          ]
+        },
+        "split": {
+          "both_pass": 0,
+          "first_only": 2,
+          "second_only": 0,
+          "both_fail": 3,
+          "assigned_pairs": 5,
+          "complete_pairs": 5,
+          "complete_pair_difference_pp": -40.0,
+          "assigned_bounds_pp": [
+            -40.0,
+            -40.0
+          ]
+        }
+      },
+      "assigned_slots_per_arm": 40,
+      "resolved_slots": {
+        "B": 40,
+        "C": 38
+      },
+      "complete_pair_difference_pp": -68.75,
+      "assigned_bounds_pp": [
+        -70.0,
+        -65.0
+      ],
+      "interval_95_pp": [
+        -81.875,
+        -55.625
+      ],
+      "degenerate_interval": false,
+      "interval_population": "fixed roster, complete pairs",
+      "leave_one_task_out_pp": {
+        "balance": -72.85714285714286,
+        "cap": -67.14285714285714,
+        "clip": -64.28571428571429,
+        "deadline": -67.14285714285714,
+        "inside": -67.14285714285714,
+        "renew": -71.42857142857143,
+        "span": -67.14285714285714,
+        "split": -72.85714285714286
+      },
+      "bootstrap_draws": 20000,
+      "bootstrap_seed": 20261120
+    }
+  ],
+  "recorded_attempts": 132,
+  "unresolved": 2,
+  "discarded": 12,
+  "discarded_seconds": 1331.327650453779,
+  "discarded_logical_tokens": 867890
+}

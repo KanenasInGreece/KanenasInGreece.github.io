@@ -1,0 +1,4 @@
+FAULTY_PLAN: counterexample proved and candidate proof rejected
+CORRECT_PLAN: universal theorem accepted by frozen wrapper
+FAULTY_PATCH: public pass, independent hidden rejection after plan approval
+CORRECT_PATCH: public and hidden pass after plan approval

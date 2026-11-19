@@ -1,0 +1,64 @@
+[
+  {
+    "id": "48bb184629506c9e",
+    "task": "balance",
+    "block": 0,
+    "generation": 0,
+    "arm": "C",
+    "order": 1,
+    "accepted": false,
+    "infrastructure_invalid": false,
+    "dispatched": false,
+    "plan": {
+      "wall_seconds": 155.0860696650343,
+      "tokens": 117379,
+      "ready": false,
+      "proof_exit": null,
+      "invalid": false
+    },
+    "wall_seconds": 155.0860696650343,
+    "logical_tokens": 117379
+  },
+  {
+    "id": "67f74ace42aa5047",
+    "task": "balance",
+    "block": 0,
+    "generation": 0,
+    "arm": "A",
+    "order": 2,
+    "accepted": true,
+    "infrastructure_invalid": false,
+    "dispatched": true,
+    "plan": {
+      "wall_seconds": 0.0,
+      "tokens": 0,
+      "proof_exit": null,
+      "invalid": false,
+      "ready": true
+    },
+    "wall_seconds": 59.180256941821426,
+    "logical_tokens": 49660,
+    "builder_id": "07759d55658ef6d7"
+  },
+  {
+    "id": "d1916e5bd3d55f6d",
+    "task": "balance",
+    "block": 0,
+    "generation": 0,
+    "arm": "B",
+    "order": 3,
+    "accepted": true,
+    "infrastructure_invalid": false,
+    "dispatched": true,
+    "plan": {
+      "wall_seconds": 56.54208536201622,
+      "tokens": 52646,
+      "ready": true,
+      "proof_exit": null,
+      "invalid": false
+    },
+    "wall_seconds": 91.13572427397594,
+    "logical_tokens": 84100,
+    "builder_id": "b71c20a9f7b60da6"
+  }
+]

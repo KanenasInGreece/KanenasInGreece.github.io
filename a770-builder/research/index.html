@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where does Lean help a local coding builder?</title>
+<style>
+:root { color-scheme: light; --ink: #192521; --muted: #485a53; --paper: #fbfaf5; --green: #125644; --rule: #c7d2c7; --wash: #e9f2e9; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 1rem/1.65 system-ui, sans-serif; }
+.shell { width: min(100% - 2.5rem, 74rem); margin-inline: auto; }
+header { background: #123d33; color: #fbfaf5; padding-block: clamp(2rem, 7vw, 7rem) clamp(2rem, 5vw, 4rem); }
+.eyebrow { margin: 0 0 1rem; color: #c5e0cd; font: 650 .83rem/1.5 system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase; }
+h1, h2, h3 { font-family: Georgia, serif; line-height: 1.13; text-wrap: balance; }
+h1 { font-size: clamp(2.5rem, 7vw, 5.5rem); max-width: 16ch; margin: 0; letter-spacing: -.045em; }
+h2 { margin: 0 0 .9rem; font-size: clamp(1.9rem, 4vw, 3rem); letter-spacing: -.028em; }
+h3 { margin: 1.5rem 0 .4rem; font-size: 1.35rem; }
+.lede { max-width: 62ch; margin: 1.3rem 0 0; color: #e3eee5; font-size: clamp(1.07rem, 2vw, 1.29rem); }
+nav { padding-block: .8rem; border-bottom: 1px solid var(--rule); }
+nav ul { display: flex; gap: .3rem 1.5rem; flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
+nav a { display: inline-block; padding-block: .35rem; font-weight: 650; }
+a { color: var(--green); text-underline-offset: .18em; }
+a:focus-visible { outline: 3px solid #975300; outline-offset: 4px; }
+main { padding-block: 1rem 3.5rem; }
+section { padding-block: 2.1rem; border-bottom: 1px solid var(--rule); }
+p, li { max-width: 76ch; }
+p { margin: .55rem 0 .9rem; }
+li + li { margin-top: .5rem; }
+nav li + li { margin-top: 0; }
+code { font-size: .92em; overflow-wrap: anywhere; }
+pre { overflow-x: auto; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; margin-block: .7rem 1.3rem; font-size: .94rem; }
+caption { text-align: left; font-weight: 700; margin-bottom: .35rem; }
+th, td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); padding: .45rem .6rem; }
+thead { background: var(--wash); }
+.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.evidence-list summary { cursor: pointer; font-weight: 650; }
+.paired-effects { margin: 1.5rem 0; padding: .95rem; background: #f1f5ee; border: 1px solid var(--rule); }
+.paired-effects figcaption { font-weight: 700; margin-bottom: .7rem; }
+.effect-row { display: grid; grid-template-columns: minmax(9rem, 1fr) minmax(12rem, 2fr) minmax(8rem, 1fr); gap: .4rem .8rem; align-items: center; margin-bottom: .6rem; }
+.effect-value { font-variant-numeric: tabular-nums; }
+.effect-axis { grid-column: 2; display: flex; justify-content: space-between; font-size: .84rem; color: var(--muted); }
+@media (max-width: 42rem) { .effect-row { grid-template-columns: 1fr; } .effect-axis { grid-column: 1; } }
+.effect-track { position: relative; height: 1.25rem; min-width: 12rem; background: var(--wash); }
+.effect-track::before { content: ""; position: absolute; left: var(--zero); height: 100%; width: 1px; background: var(--muted); }
+.effect-interval { position: absolute; top: .58rem; left: var(--lo); width: calc(var(--hi) - var(--lo)); border-top: 2px solid var(--green); }
+.effect-point { position: absolute; top: .36rem; left: var(--point); width: .54rem; height: .54rem; border-radius: 50%; background: var(--green); transform: translateX(-50%); }
+
+.callout { margin-block: 1.2rem; padding: .85rem 1.2rem; background: var(--wash); border-inline-start: .3rem solid var(--green); }
+.callout p { margin: .25rem 0; }
+.studies { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 23rem), 1fr)); gap: .8rem 1.8rem; }
+.studies article { border-top: 2px solid var(--rule); padding-bottom: .5rem; }
+.studies h3 { margin-top: 1rem; }
+.source { font-size: .91rem; color: var(--muted); }
+dt { font-weight: 700; }
+dd { margin: .15rem 0 .9rem; max-width: 76ch; }
+footer { padding-block: 0 2rem; color: var(--muted); font-size: .9rem; }
+@media print {
+  :root { --paper: white; --ink: black; }
+  .shell { width: 100%; }
+  header { background: white; color: black; padding-block: 0 1rem; }
+  .eyebrow, .lede { color: var(--muted); }
+  h1 { font-size: 34pt; max-width: none; }
+  nav { display: none; }
+  section { padding-block: 1rem; }
+  .studies { display: block; }
+  h2, h3 { break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="shell">
+    <p class="eyebrow">A770-builder research</p>
+    <h1>Where does Lean help a local coding builder?</h1>
+    <p class="lede">Two experiments tested Lean at different points in a local coding workflow. A formal brief and an optional helper yielded no measured gain in accepted patches. Requiring a proof before dispatch sharply reduced acceptance on the tested tasks.</p>
+  </div>
+</header>
+<nav aria-label="Article contents">
+  <ul class="shell">
+    <li><a href="#research-questions">Questions and results</a></li>
+    <li><a href="#scored-study">Lean during the build</a></li>
+    <li><a href="#prebuild-proof-gate">Proof before the build</a></li>
+    <li><a href="#python-audit-summary">The Python audit</a></li>
+    <li><a href="#limitations">What the tests missed</a></li>
+    <li><a href="#handoffs">Practical handoffs</a></li>
+    <li><a href="#further-study">Further study</a></li>
+    <li><a href="#appendices">Methods and records</a></li>
+  </ul>
+</nav>
+<main class="shell">
+<section id="research-questions">
+  <h2>Why test Lean, and what questions did we ask?</h2>
+  <p>Relying on a local builder's post-training and example-based tests leaves a practical gap: a patch can pass public examples and still violate intended behavior. With a budget of 2 and costs <code>[2, 0, 1]</code>, the longest affordable prefix is <code>[2, 0]</code>, yet a plausible patch that passed the public examples returned <code>[2]</code> because it stopped as soon as the remaining balance reached zero. Lean can check a proof about a precisely stated function, so A770-builder tested whether formal precision improves a local model when placed in the brief, offered during implementation, or required before dispatch.</p>
+  <ol>
+    <li>Does adding a frozen Lean proposition to the brief increase independent patch acceptance at a similar cost?</li>
+    <li>Does offering an interactive proof helper improve acceptance beyond giving the model the proposition?</li>
+    <li>Does requiring a checked proof of a proposed algorithm before dispatch improve the whole workflow over ordinary review of the same starting formal plan?</li>
+    <li>In a separate descriptive audit, did a proved Lean reference find a defect in a saved Python patch that its native grader missed?</li>
+  </ol>
+  <p>To answer these questions, we ran two scored studies using 40 matched blocks and 120 assigned slots each on the same pinned Intel Qwen3-Coder-30B-A3B W4A16 B70 profile. Acceptance per assigned slot measures whether the workflow delivered a usable patch. Token and time cost per accepted patch count effort spent on failed attempts. The practical criteria were four additional passes per 40 slots and a ceiling of 20% extra recorded time and logical tokens per pass.</p>
+  <figure class="paired-effects"><figcaption>Change in accepted patches, percentage points</figcaption><div class="effect-row"><b>Study 1 · Contract vs prose</b><div class="effect-track" aria-hidden="true" style="--zero:50%;--lo:34.722%;--hi:51.389%;--point:43.056%"><span class="effect-interval"></span><span class="effect-point"></span></div><span class="effect-value">-12.5 [-27.5, +2.5]</span></div><div class="effect-row"><b>Study 1 · Helper offer vs contract</b><div class="effect-track" aria-hidden="true" style="--zero:50%;--lo:40.278%;--hi:59.722%;--point:50.000%"><span class="effect-interval"></span><span class="effect-point"></span></div><span class="effect-value">+0.0 [-17.5, +17.5]</span></div><div class="effect-row"><b>Study 2 · Formal review vs prose plan</b><div class="effect-track" aria-hidden="true" style="--zero:50%;--lo:40.278%;--hi:58.333%;--point:50.000%"><span class="effect-interval"></span><span class="effect-point"></span></div><span class="effect-value">+0.0 [-17.5, +15.0]</span></div><div class="effect-row"><b>Study 2 · Proof gate vs formal review</b><div class="effect-track" aria-hidden="true" style="--zero:50%;--lo:4.514%;--hi:19.097%;--point:11.806%"><span class="effect-interval"></span><span class="effect-point"></span></div><span class="effect-value">-68.8 [-81.9, -55.6]</span></div><div class="effect-row" aria-hidden="true"><div class="effect-axis"><span>−90</span><span>0</span><span>+90</span></div></div><p class="source">Dots show complete-pair estimates. Lines show exploratory 95% bootstrap intervals. Each estimate compares arms within one study. The studies used different tasks and workflows.</p></figure>
+  <p>Study 1 found no measured lift from either addition. In Study 2, ordinary formal-plan review and prose plans each accepted 31 of 40 assignments. Requiring a proof cut dispatch to 3 of 40. Taken together, these results point away from asking the builder to author or navigate proofs in the build loop and toward reviewer-owned invariants at defined boundaries.</p>
+</section>
+
+<section id="scored-study">
+  <h2>Study 1 · Lean during the build</h2>
+  <p>We started by testing whether giving the local model formal specification context or an optional proof diagnostic command during implementation improves the patches it produces. In an ordered-budget scenario with a budget of 2 and costs <code>[2, 0, 1]</code>, the longest affordable prefix is <code>[2, 0]</code>, yet a plausible patch that passed the public examples returned <code>[2]</code> because it stopped as soon as the remaining balance reached zero. The hidden grader made that missed behavior visible.</p>
+  <p>We evaluated Intel Qwen3-Coder-30B on the B70 across a roster of eight small Lean implementation tasks, running five repetitions per task and three conditions per repetition in randomized order. Each attempt started from a fresh standalone seat under the same Lean compiler, OpenCode version, 900-second wall-time limit, and 600,000-logical-token budget, including at most 12,000 completion tokens and a 4,096-token ceiling for each response. All three conditions could produce ordinary Lean compiler diagnostics, and condition C also offered the dedicated proof helper.</p>
+  <div class="table-wrap"><table>
+    <caption>What the builder received</caption>
+    <thead><tr><th scope="col">Arm</th><th scope="col">Materials</th><th scope="col">Comparison</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">A · Prose</th><td>Task description, public examples and ordinary Lean compiler</td><td>Baseline</td></tr>
+      <tr><th scope="row">B · Formal contract</th><td>A plus the frozen Lean proposition</td><td>B − A measures the effect of seeing the proposition</td></tr>
+      <tr><th scope="row">C · Proof helper</th><td>B plus an optional command for candidate-linked goal diagnostics</td><td>C − B measures the effect of offering the command</td></tr>
+    </tbody>
+  </table></div>
+  <p>The primary outcome was an in-scope patch that reapplied cleanly to the frozen baseline and passed independent hidden behavioral checks within the attempt limits. All accepted patches in both studies also passed their public checks. The graders ran 27 fixed hidden examples across the tasks, using two to four cases per task, and each task’s grader was validated against a stub, a correct implementation, and a faulty implementation that passed the public examples. The protocol also specified separate proof and blind human outcomes, though scored human ratings were unavailable.</p>
+  <p>These evaluation layers answer distinct questions about a candidate patch. Lean checks a proof against a proposition about a particular function, the behavioral grader measures how a patch behaves on fixed example inputs, and a blind reviewer can still catch a costly algorithm that satisfies the formal proposition. The offline proof control and unscored rehearsal made those distinctions concrete when a correct rehearsal patch copied its growing list on each step, making its worst-case cost quadratic.</p>
+  <p>Before scoring, the study set a practical target of four additional accepted patches per 40 attempts and at most 20% extra builder time and logical tokens per accepted patch. It also set limits for checker resources, additional reviewer time and contract preparation. Those costs need separate evidence.</p>
+  <h3>What the scored run found</h3>
+  <p>Neither intervention improved accepted patch counts over prose, and both increased builder time and token cost per accepted patch. We resolved the schedule into 120 official slots from 120 recorded attempts. The rerun rules discarded 0 attempts. Counts below use assigned slots and expose the resolved denominator.</p>
+  <div class="table-wrap" tabindex="0"><table>
+    <caption>Accepted patches and recurring builder costs</caption>
+    <thead><tr><th scope="col">Condition</th><th scope="col">Accepted / assigned</th><th scope="col">Resolved</th><th scope="col">Median builder s</th><th scope="col">Builder s / pass</th><th scope="col">Logical tokens / pass</th><th scope="col">Proofs accepted / captured</th></tr></thead>
+    <tbody><tr><th scope="row">A · Prose</th><td class="num">26/40</td><td class="num">40</td><td class="num">80.4</td><td class="num">167.8</td><td class="num">147,638</td><td class="num">0/0</td></tr><tr><th scope="row">B · Formal contract</th><td class="num">21/40</td><td class="num">40</td><td class="num">86.7</td><td class="num">208.6</td><td class="num">199,578</td><td class="num">0/0</td></tr><tr><th scope="row">C · Proof helper offered</th><td class="num">21/40</td><td class="num">40</td><td class="num">88.8</td><td class="num">260.5</td><td class="num">257,965</td><td class="num">0/0</td></tr></tbody>
+  </table></div>
+  <div class="table-wrap" tabindex="0"><table>
+    <caption>Paired outcomes and intervals</caption>
+    <thead><tr><th scope="col">Change</th><th scope="col">Difference</th><th scope="col">95% interval</th><th scope="col">Both pass / comparator only / intervention only / both fail</th><th scope="col">Complete / assigned pairs</th></tr></thead>
+    <tbody><tr><th scope="row">Formal contract added</th><td class="num">-12.5</td><td class="num">-27.5 to +2.5</td><td class="num">16 / 10 / 5 / 9</td><td class="num">40/40</td></tr><tr><th scope="row">Proof helper offered</th><td class="num">+0.0</td><td class="num">-17.5 to +17.5</td><td class="num">13 / 8 / 8 / 11</td><td class="num">40/40</td></tr></tbody>
+  </table></div>
+  <p><strong>Formal contract added.</strong> The estimated change was −12.5 percentage points. The 95% interval includes zero and ends at +2.5, below the target lift of 10 points on this roster. The contract cost 35% more logical tokens and 24% more builder time per accepted patch. Leaving out one task at a time gave estimates from −20.0 to −2.9 points. Omitting field projection gave −11.4 points.</p>
+  <p><strong>Proof helper offered.</strong> The estimate was zero. The 95% interval includes the target lift of 10 points and a decline of the same size. The helper offer cost 29% more logical tokens and 25% more builder time per accepted patch. Leave-one-task-out estimates ranged from −5.7 to +2.9 points. Removing field projection gave +2.9 points.</p>
+  <p>Across official slots, 29 had no captured implementation patch, 0 had a patch that failed the scope check, and 22 were rejected in the hidden phase. The bridge recorded 2 quota stops and the runner recorded 0 wall-time stops. These categories can overlap. More than half of the unsuccessful attempts produced no patch, and the captured logs show zero dedicated helper calls and zero optional proof submissions.</p>
+  <p>A practical builder improvement is to capture the first successful edit and report tool errors or an empty diff explicitly. That would make this failure mode easier to diagnose before adding another optional tool.</p>
+  <div class="callout"><p><strong>Recommendation.</strong> Neither intervention met the combined acceptance and builder-cost thresholds. The choice of where to integrate Lean remains open. The offline controls establish that narrow checker use is technically feasible.</p></div>
+  <p class="source"><strong>Measurement &amp; sensitivity notes:</strong> To estimate uncertainty, we resampled matched repetitions within each task 20,000 times, giving all eight tasks equal weight. The resulting intervals describe repetition-level uncertainty on this fixed roster under an independence assumption. Fresh seats and randomized order help control order effects. A warm shared backend can still introduce dependence. The two contrasts are exploratory, so new tasks and other languages require their own trials. In the cost figures, cost per pass includes unsuccessful attempts, whereas builder time excludes model startup, contract authorship, separate grading, and human review. The median attempt took 6.3 seconds longer with the contract and another 2.1 seconds longer with the helper offer (whole builder attempt time, including generating and testing code). Because the captured logs show zero dedicated helper calls and zero optional proof submissions, the helper comparison estimates only the intent-to-treat effect of offering the helper; the benefit and recurring checker cost of actually using it remain unmeasured hypotheses, as do contract preparation time, scored blind review ratings and time, maintainability, and concision. <a href="lean-builder-runs/scored-study/run-02/results.json">Paired counts, costs and sensitivity analysis</a> · <a href="lean-builder-runs/scored-study/run-02/manifest.json">Frozen schedule and manifest</a></p>
+  <details class="evidence-list">
+    <summary>Accepted patches by task</summary>
+    <div class="table-wrap" tabindex="0"><table>
+      <caption>Five assigned attempts per task and arm</caption>
+      <thead><tr><th scope="col">Task</th><th scope="col">Prose</th><th scope="col">Formal contract</th><th scope="col">Proof helper</th><th scope="col">B − A (points)</th><th scope="col">C − B (points)</th></tr></thead>
+      <tbody><tr><th scope="row">Stable deduplication</th><td class="num">2</td><td class="num">4</td><td class="num">3</td><td class="num">+40</td><td class="num">-20</td></tr><tr><th scope="row">Interval coalescing</th><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">+0</td><td class="num">+20</td></tr><tr><th scope="row">Log-count aggregation</th><td class="num">5</td><td class="num">1</td><td class="num">1</td><td class="num">-80</td><td class="num">+0</td></tr><tr><th scope="row">Sorted merge</th><td class="num">3</td><td class="num">2</td><td class="num">4</td><td class="num">-20</td><td class="num">+40</td></tr><tr><th scope="row">Minute selection</th><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">+0</td><td class="num">-20</td></tr><tr><th scope="row">Affordable prefix</th><td class="num">5</td><td class="num">3</td><td class="num">4</td><td class="num">-40</td><td class="num">+20</td></tr><tr><th scope="row">Field projection</th><td class="num">4</td><td class="num">3</td><td class="num">2</td><td class="num">-20</td><td class="num">-20</td></tr><tr><th scope="row">Bounded state transition</th><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">+20</td><td class="num">-20</td></tr></tbody>
+    </table></div>
+  </details>
+</section>
+
+<section id="prebuild-proof-gate">
+  <h2>Study 2 · Proof before dispatch</h2>
+  <p>Because giving formal contracts and helper diagnostics during implementation did not lift Study 1, we moved upstream to test whether Lean could reject or correct a bad plan before the builder spent its budget implementing it. For each of eight new Lean-native bug fixes, the team froze a starting plan and an independently defined invariant. Four plans started correct and four contained deliberately seeded faults. A received the prose plan. B gave the local model a bounded ordinary review round on the executable plan. C started from the same formal plan and review budget as B, with a proof requirement before dispatch. Each delivered patch went through independent replay and the same hidden grader in all arms. The graders contained 24 fixed examples, three per task. B versus A combines a formal source plan, an invariant in the handoff, and an extra model review round. Ordinary review could dispatch a compiling plan. Passing the public examples was optional at that stage. The proof gate also required a checked proof.</p>
+  <p>The offline prefix control proved why the flawed plan failed, validated a corrected universal theorem, and caught a faulty implementation after a plan had passed. The fixture checks exercised all eight tasks. A separate live rehearsal exercised the no-dispatch path. These controls establish that the workflow can distinguish a faulty plan from a faulty patch. They were excluded from the estimates. <a href="lean-builder-runs/prebuild-study/control-receipts.txt">Offline receipts</a> · <a href="lean-builder-runs/prebuild-study/fixture-receipts.txt">Fixture receipts</a> · <a href="lean-builder-runs/prebuild-study/rehearsal-01/attempts.json">Rehearsal receipts</a></p>
+  <h3>Scored comparison</h3>
+  <p>Requiring a checked proof before dispatch sharply reduced accepted patches and multiplied cost per pass. The proof gate accepted 3 of 40 assignments, compared with 31 of 40 under ordinary formal-plan review (and 31 of 40 under the prose plan). All three dispatched patches passed. The gate withheld dispatch in 35 resolved assignments, and two C slots remained unresolved after their block reruns. Even treating both unresolved slots as passes would leave C 26 patches behind B.</p>
+  <div class="table-wrap" tabindex="0"><table>
+    <caption>What happened to the 40 proof-gated assignments</caption>
+    <thead><tr><th scope="col">Recorded outcome</th><th scope="col">Slots</th></tr></thead>
+    <tbody><tr><th scope="row">No proof file detected in a resolved slot</th><td class="num">14</td></tr>
+      <tr><th scope="row">Proof file detected, but the planner reached a quota stop before independent checking</th><td class="num">13</td></tr>
+      <tr><th scope="row">Checked proof failed</th><td class="num">8</td></tr>
+      <tr><th scope="row">Checked proof passed and the builder dispatched</th><td class="num">3</td></tr>
+      <tr><th scope="row">Unresolved infrastructure outcome</th><td class="num">2</td></tr></tbody>
+  </table></div>
+  <p>Several proof-check failures were syntax or tactic errors. The live checker failures supplied no counterexample to a plan. The offline prefix control demonstrates what a counterexample looks like when it is actually established.</p>
+  <div class="table-wrap"><table><caption>Acceptance and dispatch by plan-review condition</caption><thead><tr><th scope="col">Condition</th><th scope="col">Accepted / assigned</th><th scope="col">Resolved</th><th scope="col">Dispatched</th><th scope="col">Plan proofs passed</th><th scope="col">Seconds / accepted patch</th><th scope="col">Logical tokens / accepted patch</th></tr></thead><tbody><tr><th scope="row">A · Prose plan</th><td>31/40</td><td>40</td><td>40</td><td>0</td><td>68.1</td><td>57,458</td></tr><tr><th scope="row">B · Ordinary formal-plan review</th><td>31/40</td><td>40</td><td>40</td><td>0</td><td>120.8</td><td>96,066</td></tr><tr><th scope="row">C · Proof gate</th><td>3/40</td><td>38</td><td>3</td><td>3</td><td>1,319.9</td><td>957,352</td></tr></tbody></table></div>
+  <p><strong>B minus A.</strong> Complete-pair estimate +0.0 points. Exploratory 95% interval -17.5 to +15.0. Assigned-slot bounds +0.0 to +0.0 points.</p><p><strong>C minus B.</strong> Complete-pair estimate -68.8 points. Exploratory 95% interval -81.9 to -55.6. Assigned-slot bounds -70.0 to -65.0 points.</p>
+  <p>Ordinary formal-plan review delivered the same number of accepted patches as the prose plan and cost more per pass. Its exploratory interval still allows a practically relevant gain or loss on this roster. The gate used 10.92× the recorded time and 9.97× the recorded tokens per observed accepted patch of ordinary review.</p>
+  <p class="source"><strong>Measurement &amp; sensitivity notes:</strong> The schedule contains 120 official slots, with 2 unresolved. The experiment recorded 132 attempts and excluded 12 under the whole-block rerun rule. Four task plans started with deliberately seeded faults and four started correct. All six infrastructure-invalid records occurred in C. The assigned-slot bounds retain those unknown outcomes. A sensitivity check using only original attempts gave bounds of −72.5 to −62.5 percentage points for C versus B. For B versus A, 24 matched pairs passed in both arms, 7 passed in A alone, 7 passed in B alone, and 2 failed in both. For C versus B, 3 matched pairs passed in both arms, 26 passed in B alone, 0 passed in C alone, and 9 failed in both. We resampled the available complete pairs within each task 20,000 times with equal weight across tasks. The estimate gives each task equal weight. The counts describe the pooled pairs and can differ from that weighted estimate. A used fixed prose whose authoring effort was outside the stopwatch. B and C each used a fresh planning session with the same 180-second and 120,000-token limits. Each builder had the same 900-second and 600,000-token limits. Measured time includes model planning, plan checks, builder execution and patch grading. Cost per accepted patch includes effort from unresolved official slots. A gate rejection counts as a failed assigned slot and retains planning cost. Discarded attempts used 1,331.3 seconds and 867,890 logical tokens. Human preparation and blind-review costs remain open. The offline controls were excluded, and the result applies to these seeded Lean-native tasks. <a href="lean-builder-runs/prebuild-study/scored-01/results.json">Paired counts, acceptance and costs</a> · <a href="lean-builder-runs/prebuild-study/scored-01/manifest.json">Frozen schedule</a> · <a href="lean-builder-runs/prebuild-study/scored-01/astra-review.md">Independent Astra review</a></p>
+</section>
+
+<section id="python-audit-summary">
+  <h2>What a proved reference added to one Python patch</h2>
+  <p>Because asking the builder to produce or gate on proofs inside the workflow proved costly in Studies 1 and 2, we stepped outside the builder loop to test post-hoc verification on delivered code with no new builder calls. We audited a saved Python log-summary patch from the kit. Lean proved that adding a rejected row leaves the reference’s counts unchanged, and the independent Python and Lean-backed checks agreed on the count projection across 4,681 exhaustive sequences from a finite grid and 1,000 draws from a stated generator. Lean found no additional defect in this patch, while the native grader checked more fields, including the minute tie-break.</p>
+  <p>The Lean checker took a median 0.25 seconds over five invocations to check the proof and produce the comparison vectors. The Python timing covered different work. This single-patch audit demonstrates a feasible post-hoc oracle for a narrow property, and its incremental defect-detection accuracy and authoring cost on other Python tasks remain untested hypotheses.</p>
+</section>
+
+<section id="limitations">
+  <h2>What these tests missed</h2>
+  <dl>
+    <dt>Formalization and prompt size</dt>
+    <dd>Study 1 added a proposition to existing prose. Its estimate combines formal content, repetition, and extra prompt length. A structured prose brief matched for length and detail could test the contribution of the notation. The optional helper had zero recorded calls, leaving the effect of active use open.</dd>
+    <dt>Proof authoring and dispatch policy</dt>
+    <dd>Study 2 tested a complete workflow: one local model had to find a proof within a fixed budget, and dispatch depended on acceptance. The 13 detected proof files that went unchecked could contain useful work. The study records their blocked dispatch and settled costs. It leaves their proof quality unknown. The three successful C patches were selected by the gate, so their pass rate cannot establish that a proved plan improves implementation quality. A reviewer-supplied proof, a different prover, or advisory checking would be different interventions. Checking proof files after a planner stop, under a frozen cost policy, could separate proof quality from the cutoff rule.</dd>
+    <dt>Generality and hidden check coverage</dt>
+    <dd>Each comparison covers one model, a fixed set of small Lean-native tasks, and fixed resource limits. Study 2 deliberately seeded faults in half its starting plans. Hidden examples detect particular behaviors. They offer finite coverage, and neither experiment measures the value of Lean across a repository or generalizes to Python, C, or C++ implementations.</dd>
+    <dt>Unmeasured labor and quality</dt>
+    <dd>The cost tables cover recorded machine effort. They leave out contract authoring and scored human review time. Scored maintainability and concision remain unmeasured. Recorded token totals omit generation for requests whose final usage could not be reconciled.</dd>
+  </dl>
+  <p>These experiments establish the empirical costs and limits of the two builder workflows tested here, leading A770-builder to pause this line of integration. Any future evaluation will first need a defined verification layer, an artifact Lean can check at that boundary, and a reliable way to connect that check to the delivered code.</p>
+</section>
+
+<section id="handoffs">
+  <h2>Where Lean might fit: invariants at the boundary</h2>
+  <p>Taken together, the two builder studies and the Python audit point away from asking a local builder to author proofs in the generation or dispatch loop, and toward reviewer-owned invariants at defined boundaries. Formal contracts appear best suited to small functions whose edge-case failures are hard to spot in review and cheap to express precisely, such as a selection rule, canonical form, or state transition. Keeping the prose contract and checked proposition under the same owner may allow a reusable contract to reduce ambiguity across prompts and reviews, and any resulting gains in patch acceptance, consistency, or concision still require measurement on the target work.</p>
+  <div class="table-wrap"><table>
+    <caption>What crosses the language boundary</caption>
+    <thead><tr><th scope="col">Target</th><th scope="col">Practical first step</th><th scope="col">Boundary to check</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Lean</th><td>Prove a narrow property of the delivered function, pinned to its declaration and reviewed assumptions.</td><td>Exact theorem, imported implementation, allowed axioms and trusted checker.</td></tr>
+      <tr><th scope="row">Python</th><td>Run pytest or generated cases against the real function. Compare a pure result with a Lean reference when it adds an independent oracle.</td><td>Arbitrary-size integers where applicable, input validation, exceptions, ordering and serialization.</td></tr>
+      <tr><th scope="row">C</th><td>Use a typed fixture to drive the real compiled function and compare outputs. Use a C-aware verifier if the requirement concerns execution safety.</td><td>Width and signedness, overflow, buffer bounds, aliasing, and defined behavior. <a href="https://frama-c.com/fc-plugins/wp.html">Frama-C WP</a></td></tr>
+      <tr><th scope="row">C++</th><td>Test the compiled component through a narrow adapter, with native tests and sanitizer checks for language-specific faults.</td><td>Representation, iterator validity, lifetime, ownership, exceptions and concurrency when applicable.</td></tr>
+    </tbody>
+  </table></div>
+  <p>A theorem about a Lean reference covers the reference and its assumptions. Differential tests compare selected executions of the Python, C, or C++ implementation against it. A guarantee about every execution requires a verified connection to the delivered implementation. A proved validator can instead establish a property for each accepted result when the caller passes the exact input and output and handles rejection. Any foreign-function adapter needs its own checks. <a href="https://lean-lang.org/doc/reference/latest/Run-Time-Code/Foreign-Function-Interface/">Lean FFI reference</a></p>
+  <p>The pre-build study tested proof as a dispatch requirement. A different design could use Lean on selected reviewer-owned invariants or as a reference oracle. That would warrant its own comparison. <a href="lean-prebuild-experiment-brief.md">Pre-build experiment brief</a></p>
+  <h3>From prose to Lean and back</h3>
+  <p>Start with the intended observable behavior, the input domain, error cases and one example where a plausible implementation fails. Translate those requirements into types, preconditions and postconditions. Review the translation against the prose before handing it to the builder. On the way back, generate or draft a plain-language summary from the same revision and check it against the statement. Include the assumptions, the exact function covered and the evidence for each claim. Keep rationale, operational details and unresolved requirements in prose. A proof record supplies evidence for the documented property.</p>
+  <p>For <code>takeBudget</code>, the prose rule “stop at the first unaffordable item” becomes a theorem about a returned prefix and its remaining suffix. If the suffix starts with an item, adding that item would exceed the budget. The handoff back to documentation can state that rule in one sentence and show <code>[2, 0, 1]</code> at budget 2. The proof receipt identifies the theorem and code revision. The example catches a likely misunderstanding during review.</p>
+  <h3>Design choices for a future evaluation</h3>
+  <ul>
+    <li>Start with a compact contract beside the task brief. Spell out details such as first-observation tie-breaking, zero costs after budget exhaustion, and overflow behavior.</li>
+    <li>Link an independently owned hidden check to each important requirement. Reuse counterexamples as release regression tests. Keep one faulty control that the public examples miss.</li>
+    <li>Make interactive goals opt-in for a proof-bearing task. Give each call a deadline and keep the source hash, obligation and diagnostics in its receipt.</li>
+    <li>Keep proof and behavioral verdicts separate. Check algorithmic complexity and maintainability in review. A function can satisfy the same proposition with a quadratic implementation.</li>
+    <li>Track specification and review minutes once per task and builder tokens, builder time, checker CPU and memory on each attempt. Evaluate both the recurring cost per accepted patch and the one-time setup cost.</li>
+  </ul>
+</section>
+
+<section id="further-study">
+  <h2>Further study</h2>
+  <ul>
+    <li>Start with propositions, equality, induction and tactics in <a href="https://lean-lang.org/theorem_proving_in_lean4/">Theorem Proving in Lean 4</a>.</li>
+    <li>Learn how those ideas connect to executable code, collections and dependent types in <a href="https://lean-lang.org/functional_programming_in_lean/">Functional Programming in Lean</a>.</li>
+    <li>Read about assumptions and independent checking in <a href="https://lean-lang.org/doc/reference/latest/ValidatingProofs/">Validating a Lean Proof</a>.</li>
+    <li>See how projects compile and manage modules in the <a href="https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Lake/">Lake reference</a>.</li>
+    <li>For finite checks on code that stays in Python, start with <a href="https://hypothesis.readthedocs.io/en/latest/">Hypothesis</a>. For C and C++, see the scope of runtime memory checks in <a href="https://clang.llvm.org/docs/AddressSanitizer.html">AddressSanitizer</a>.</li>
+  </ul>
+</section>
+
+<details class="evidence-list" id="appendices">
+  <summary>Methods, qualification controls, prior work and source records</summary>
+<section id="lean">
+  <h2>What Lean checks</h2>
+  <p>Lean 4 is a programming language and an interactive theorem prover. A specification can be expressed as a proposition about a function. Tactics help construct a proof, and Lean’s kernel checks the resulting proof term. A theorem can cover every input that satisfies its stated assumptions, including inputs beyond the reach of an example-based test suite. <a href="https://lean-lang.org/theorem_proving_in_lean4/propositions_and_proofs.html">Propositions and Proofs</a></p>
+  <p>In a neural-symbolic workflow, the model proposes code or proof steps and the checker reports which obligations remain. A goal state can show the assumptions in scope and the proposition still to prove. That feedback gives the model a concrete target for its next attempt. The theorem and its assumptions still need review against the intended behavior. <a href="https://lean-lang.org/doc/reference/latest/ValidatingProofs/">Lean’s proof validation guide</a></p>
+  <div class="callout">
+    <p><strong>Example.</strong> For a pure budget allocator, prove that every successful allocation stays within the available budget and preserves the requested order. Include positive cases that establish when allocation succeeds. Otherwise, an implementation that always rejects could satisfy a success-only theorem.</p>
+  </div>
+  <p>If the allocator itself is written in Lean and the theorem refers directly to that function, the proof covers that implementation under the formal assumptions. For a patch in Python, C, C++, or another language, the caller can supply a precondition, postcondition, or invariant for the shipped code. A language-native test harness can check the property on boundary and generated cases. An executable Lean reference is optional and supplies comparison outputs for the cases exercised. A universal claim about the foreign implementation needs a justified link to the real code, such as a refinement proof over a faithful language semantics. Translation adds obligations for integer range and overflow, input validation, representation, and error behavior. CLI parsing, filesystem behavior, and subprocess failures remain separate runtime questions.</p>
+  <p>A useful intermediate option is to check each returned result when the interface permits it. A small validator can receive the original input and the candidate output. Lean can prove that the validator accepts only results that satisfy the invariant. If production uses that exact validator and handles failure, the guarantee applies to accepted results. The foreign implementation can still fail to produce a result, and the data passed across the boundary must match what the validator checked. At patch-verification time, calling the same validator on selected inputs remains a test of those executions.</p>
+</section>
+<section id="evidence">
+  <h2>What the studies found</h2>
+  <div class="studies">
+    <article>
+      <h3>Goal feedback helps search, unevenly</h3>
+      <p><cite>DeepSeek-Prover-V1.5</cite> combined Lean feedback, reinforcement learning, and proof search. On ProofNet at the larger search budget, the two search variants reported 24.8% and 25.3% overall. At the smaller budget they reported 21.9% and 21.8%. The added training had little observable benefit in that smaller search comparison. The overall row includes validation, which the study also used during expert iteration. The benchmarks measure mathematical proof completion by specialized provers.</p>
+      <p class="source"><a href="https://arxiv.org/html/2408.08152">DeepSeek-Prover-V1.5, Table 2</a></p>
+    </article>
+    <article>
+      <h3>Intermediate feedback can improve the signal</h3>
+      <p><cite>Process-Verified Reinforcement Learning for Theorem Proving via Lean</cite> reported that adding tactic feedback to outcome feedback raised STP-Lean’s MiniF2F pass@64 by 2.5 percentage points over the supervised baseline, versus 1.2 points with outcome-only training. The authors also report settings where outcome-only training yielded no gain. This compares training signals, so it motivates measuring interactive feedback separately on an unchanged local model.</p>
+      <p class="source"><a href="https://openreview.net/pdf/51968b34e98420e0f603f39a6ba5d6788a4f19a7.pdf#page=7">Process-Verified RL, Table 2</a></p>
+    </article>
+    <article>
+      <h3>Verifier feedback can help with software annotations</h3>
+      <p><cite>DafnyBench</cite> asked models to supply missing proof annotations for over 750 Dafny programs. The best prompting setup reached 68% verification success. Retrying with verifier errors improved results in the study, and success fell on tasks requiring more code and annotations. This is closer to a coding workflow, with the program and contract already present.</p>
+      <p class="source"><a href="https://arxiv.org/abs/2406.08467">DafnyBench</a></p>
+    </article>
+    <article>
+      <h3>Checking consistency can filter bad submissions</h3>
+      <p><cite>Clover</cite> checked consistency among Dafny code, formal specifications, and documentation. On its hand-designed, textbook-level benchmark, the checker accepted up to 87% of correct instances and accepted zero of the incorrect instances evaluated. That is evidence for a filter on the evaluated set. It leaves open how often a real repository’s intended specification is incomplete.</p>
+      <p class="source"><a href="https://arxiv.org/abs/2310.17807">Clover</a></p>
+    </article>
+    <article>
+      <h3>End-to-end verification is still difficult</h3>
+      <p>On <cite>VERINA</cite>, the authors report 72.6% code correctness, 52.3% specification soundness and completeness, and 4.9% proof success for their best model, OpenAI o3, with one trial per task. These are separate evaluations. A code generation rate is a poor proxy for how often a builder will deliver a usable proof. <cite>CLEVER</cite> separately reports that evaluated methods struggle to complete end-to-end verification against curated specifications.</p>
+      <p class="source"><a href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/41b8c80f9113b9f8e2e129447221682a-Abstract-Conference.html">VERINA</a> · <a href="https://arxiv.org/abs/2505.13938">CLEVER</a></p>
+    </article>
+    <article>
+      <h3>Existing tests can seed a specification</h3>
+      <p><cite>FVSpec</cite> derives Lean verification challenges from real Python property-based tests. This suggests a practical way to start from a project’s existing behavioral properties. Converting a test property into Lean still requires checking that the formalization captures the right domain and semantics. The existence of a translated challenge says little about whether the original Python implementation meets it on every input.</p>
+      <p class="source"><a href="https://arxiv.org/abs/2606.01008">FVSpec</a></p>
+    </article>
+  </div>
+  <p>The studies support a bounded pilot. They give no estimate for the quality lift, proof completion rate, or review cost of the current local seat on A770-builder tasks.</p>
+</section>
+<section id="integration">
+  <h2>Where Lean fits in local-build</h2>
+  <p><strong>Observed on v0.6.0, commit <code>7ce5426</code>.</strong> The run specification carries a card, edit scope, extra commands, prepared definitions and verification metadata. The harness saves the specification beside the captured patch. Standalone <code>verify</code> does not automatically use the saved <code>verify.test</code>. Pass the reviewer command with <code>--test</code>, as the suite runner does for its working command. The matching spec supplies hidden pytest file names. Verify checks a clean standalone clone, applies the patch, stages hidden files, runs public then hidden on public success, records phase status and resets the seat. The phases have separate sandboxes over the same writable checkout and share the optional deadline. The sandbox clears the environment, uses an isolated network namespace, mounts selected host tools and a warm uv cache, and disables the model bridge during verify. The shipped C++ reference task already uses CMake with a pytest-driven hidden phase. The session baseline returned 792 pytest passes and one dependency deprecation warning. The shell selftest passed. <a href="https://github.com/KanenasInGreece/a770-builder/blob/7ce5426/skills/local-build/scripts/local-build.sh">Verification entry point</a></p>
+  <p><strong>Proposed integration.</strong> Reuse <code>verify --test</code> and the hidden pytest launcher. If an experiment needs a supported mount, add an opt-in, reviewer-selected read-only bundle for a pinned Lean and Lake release and trusted checker files. Keep normal verification language-agnostic and keep the bundle outside the candidate edit scope. Freeze the base revision, allowed source paths, theorem, module imports, executable paths and acceptance command. Rebuild candidate source from scratch and use only Init/Lean and the bundled libraries. Resolve binaries directly, with fresh HOME and no dependency downloads. Run proof acceptance independently of hidden behavioral grading so proof failures cannot suppress the primary outcome. <a href="https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Lake/">Lake reference</a></p>
+  <p><strong>Proof acceptance policy.</strong> The reviewer theorem imports the delivered function and requires a proof at the frozen type. Reject placeholder warnings in all checked source and reject any transitive axiom outside the scored checker’s <code>propext</code>, <code>Quot.sound</code> and <code>Classical.choice</code> allowlist, including custom axioms and native-evaluation trust dependencies. Treat the smoke test's output-string check as a positive and negative control. Before using a gate on unrestricted generated Lean, validate statements and proof terms with an independent checker such as Lean Comparator, and isolate candidate elaboration from the checker and grading assets. Read-only theorem source alone gives no assurance about forged diagnostics or candidate metaprograms. <a href="https://lean-lang.org/doc/reference/latest/ValidatingProofs/">Lean proof validation</a></p>
+</section>
+<section id="pilot">
+  <h2>Offline pilot on an ordered budget</h2>
+  <p><strong>Contract.</strong> Given any natural-number budget and finite ordered list of natural-number costs, <code>Pilot.takeBudget</code> returns the longest initial segment whose total fits. Zero budgets, zero costs and empty lists are valid. The function always returns a list. If the total fits it returns all entries, including exact fits. At the first unaffordable item it stops, even if later entries would fit. The returned prefix preserves order and duplicates. This is a small analogue of selecting ordered work under a token budget with costs already measured. Tokenization and the surrounding harness are outside this theorem.</p>
+  <pre><code>theorem accepted (budget : Nat) (costs : List Nat) :
+    ∃ rest, costs = takeBudget budget costs ++ rest ∧
+      (takeBudget budget costs).sum ≤ budget ∧
+      (match rest with
+       | [] =&gt; True
+       | next :: _ =&gt; budget &lt; (takeBudget budget costs).sum + next)</code></pre>
+  <p>The split proves that the result is a prefix. The sum proves affordability. If a remainder exists, the strict inequality proves that one more item is unaffordable. Since costs are nonnegative, any longer prefix is then also unaffordable. This last conjunct rules out simply returning an empty or prematurely truncated prefix whenever more entries fit.</p>
+  <p><strong>Implementation checked.</strong> The Lean function recurses on the list. On an affordable head it includes that head and recurses with the remaining budget. At an unaffordable head, or on an empty list, it returns the empty list. The proof uses induction on the input list and Lean's <code>omega</code> tactic for natural-number arithmetic. The reviewer declaration checks <code>takeBudget_spec budget costs</code> at the type above and prints the axioms of <code>accepted</code>.</p>
+  <p><strong>Observed 2026-11-18, zero model calls.</strong> Used official Linux x86-64 Lean 4.19.0, commit <code>6caaee842e94</code>, and bundled Lake 5.0.0. The downloaded archive's measured SHA-256 was <code>6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe</code>. Each control started from its own standalone clone. The checker ran under Bubblewrap with no external network, the toolchain and reviewer files read-only, a fresh HOME, no third-party Lake dependencies and a 20-second limit. It ran <code>lake build +Pilot.Proof</code> and <code>lake env lean -DwarningAsError=true /review/Accept.lean</code>, then checked the named declaration's printed transitive axioms. A repeat cleared the build cache and added three ordinary cases. <a href="https://github.com/leanprover/lean4/releases/tag/v4.19.0">Pinned Lean release</a></p>
+  <ul>
+    <li>Valid implementation and proof accepted, with axioms <code>propext</code> and <code>Quot.sound</code>.</li>
+    <li>A proof replaced by <code>sorry</code> compiled with a warning and was rejected by the axiom gate for <code>sorryAx</code>.</li>
+    <li>A theorem changed to <code>True</code> compiled on its own and was rejected at the reviewer theorem's required type.</li>
+    <li>An implementation that stopped at zero remaining budget passed all three ordinary checks, including an exact fit. The proof build rejected it. A separate computation and counterexample proof confirmed that budget 2 with costs <code>[2, 0, 1]</code> returned <code>[2]</code> instead of <code>[2, 0]</code>.</li>
+  </ul>
+  <p><strong>Existing verify entry point.</strong> A second disposable clone started with the zero-cost bug. Replaying the fix through the shipped <code>local-build.sh verify good.patch &lt;seat&gt; --test &quot;bash &lt;bundle&gt;/check&quot; --timeout 20</code> returned <code>public=pass hidden=none</code> and reset the seat to zero changed entries. For this feasibility check only, <code>A770B_OPENCODE_BIN</code> pointed at a scratch directory with the existing OpenCode binary, pinned Lean distribution and reviewer files. The existing sandbox mounted the directory read-only. This used process-local overrides and left the skill and sandbox source untouched. The three negative controls ran in the separate Bubblewrap fixture described above.</p>
+  <p>The valid repeat took 1.17 seconds inside the namespace, with 1.10 CPU seconds and a reported peak process RSS of about 648 MiB. This is one timed cold build and check, including the ordinary examples. Aggregate memory, setup time, and independent reviewer effort await measurement. The normal API sandbox denied loopback and network namespace setup. The authorized host execution context provided Bubblewrap network isolation.</p>
+  <details>
+    <summary>Lean sources used in the offline controls</summary>
+    <h3>Pilot/Budget.lean</h3>
+    <pre><code>namespace Pilot
+
+def takeBudget (budget : Nat) : List Nat → List Nat
+  | [] =&gt; []
+  | cost :: tail =&gt;
+    if cost ≤ budget then cost :: takeBudget (budget - cost) tail else []
+
+end Pilot</code></pre>
+    <h3>Pilot/Proof.lean</h3>
+    <pre><code>import Pilot.Budget
+import Lean.Elab.Tactic.Omega
+
+namespace Pilot
+
+theorem takeBudget_spec (budget : Nat) (costs : List Nat) :
+    ∃ rest, costs = takeBudget budget costs ++ rest ∧
+      (takeBudget budget costs).sum ≤ budget ∧
+      (match rest with
+       | [] =&gt; True
+       | next :: _ =&gt; budget &lt; (takeBudget budget costs).sum + next) := by
+  induction costs generalizing budget with
+  | nil =&gt; exact ⟨[], rfl, Nat.zero_le _, trivial⟩
+  | cons cost tail ih =&gt;
+    by_cases fits : cost ≤ budget
+    · obtain ⟨rest, split, sumBound, maximal⟩ := ih (budget - cost)
+      refine ⟨rest, ?_, ?_, ?_⟩
+      · simp only [takeBudget, if_pos fits, List.cons_append]
+        exact congrArg (List.cons cost) split
+      · simp only [takeBudget, if_pos fits, List.sum_cons]
+        omega
+      · simp only [takeBudget, if_pos fits, List.sum_cons]
+        cases rest with
+        | nil =&gt; trivial
+        | cons next remaining =&gt;
+          change budget - cost &lt; (takeBudget (budget - cost) tail).sum + next at maximal
+          omega
+    · refine ⟨cost :: tail, ?_, ?_, ?_⟩
+      · simp [takeBudget, fits]
+      · simp [takeBudget, fits]
+      · simpa [takeBudget, fits] using Nat.lt_of_not_ge fits
+end Pilot</code></pre>
+    <h3>Accept.lean</h3>
+    <pre><code>import Pilot.Proof
+open Pilot
+
+theorem accepted (budget : Nat) (costs : List Nat) :
+    ∃ rest, costs = takeBudget budget costs ++ rest ∧
+      (takeBudget budget costs).sum ≤ budget ∧
+      (match rest with
+       | [] =&gt; True
+       | next :: _ =&gt; budget &lt; (takeBudget budget costs).sum + next) :=
+  takeBudget_spec budget costs
+
+#print axioms accepted</code></pre>
+    <h3>Behavior.lean</h3>
+    <pre><code>import Pilot.Budget
+open Pilot
+example : takeBudget 5 [2, 4, 1] = [2] := by decide
+example : takeBudget 5 [2, 3] = [2, 3] := by decide
+example : takeBudget 5 [1, 2] = [1, 2] := by decide</code></pre>
+    <h3>Counterexample.lean</h3>
+    <pre><code>import Pilot.Budget
+open Pilot
+example : takeBudget 2 [2, 0, 1] = [2] := by decide
+example : ¬ (∃ rest, [2, 0, 1] = takeBudget 2 [2, 0, 1] ++ rest ∧
+    (takeBudget 2 [2, 0, 1]).sum ≤ 2 ∧
+    (match rest with
+     | [] =&gt; True
+     | next :: _ =&gt; 2 &lt; (takeBudget 2 [2, 0, 1]).sum + next)) := by
+  intro ⟨rest, split, _, maximal⟩
+  have h : rest = [0, 1] := by simpa [takeBudget] using split.symm
+  subst rest
+  simpa [takeBudget] using maximal</code></pre>
+    <h3>lakefile.toml</h3>
+    <pre><code>name = &quot;budgetpilot&quot;
+[[lean_lib]]
+name = &quot;Pilot&quot;</code></pre>
+    <h3>lean-toolchain</h3>
+    <pre><code>leanprover/lean4:v4.19.0</code></pre>
+  </details>
+</section>
+<section id="experiment">
+  <h2>How to measure the difference</h2>
+  <p><strong>Proposed design.</strong> After the offline pilot, freeze eight bounded Lean-native tasks, including one routine comparison task with little expected proof benefit. Run five paired repetitions per task with randomized arm order and fresh seats. Each arm delivers the same Lean implementation patch and receives the same prose contract, public examples, compiler access, fixed hidden behavioral grader, model/quant/backend, sampling, and enforced wall-clock and cumulative token limits. Pair by task and seed where the backend supports it. Freeze cache policy and measure model tokens from backend counters, with prompt, generated and reasoning accounting documented to avoid double counting. Require comparable counters before scoring.</p>
+  <dl>
+    <dt>A · Current workflow</dt>
+    <dd>Use the prose contract and the usual edit, compile and test loop.</dd>
+    <dt>B · Frozen Lean contract</dt>
+    <dd>Add the reviewer theorem as context. Keep ordinary compiler diagnostics for implementation work.</dd>
+    <dt>C · Frozen contract with proof feedback</dt>
+    <dd>Add a reviewer-owned checker that returns obligation and goal diagnostics from temporary proof attempts. Keep scratch proofs out of the required patch. Allow the same implementation compiler diagnostics as B. Freeze the tool transcript and distinguish any proof-feedback contamination in B before interpreting the comparison.</dd>
+  </dl>
+  <p>Grade all saved implementation patches with the same hidden behavior checks and review them blind to condition. Report A to B for the contribution of the frozen contract and B to C for the contribution of feedback. Evaluate optional proof artifacts independently. Treat mandatory proof submission or lean-lsp-mcp as separate later interventions. For a future foreign-language study, compare native property checks and, where useful, a separate Lean oracle condition. Grade behavioral agreement on the exercised inputs.</p>
+  <p><strong>Proposed decision rule.</strong> For further investment require at least four net additional independently accepted patches per 40 matched attempts (+10 percentage points) for the proposed arm over its comparator. Require at most 20% more billed or measured model tokens and 20% more wall time per accepted patch, checker p95 at most 5 CPU seconds per invocation and 1 GiB aggregate peak RSS, plus at most 5 extra reviewer minutes per patch and 30 minutes per task to author and review the contract. Treat these as provisional feasibility thresholds. Report paired counts by task and seed, including both-pass, both-fail, wins and losses, with uncertainty at the task level. Tabulate proof attempts, proof acceptance, missing proofs, timeouts and infrastructure failures separately. Include model timeouts as unsuccessful attempts. Predeclare one rerun of an infrastructure-affected matched block and show the original counts as well. Report null, negative and inconclusive outcomes together with resource and review costs.</p>
+</section>
+<section id="calibration">
+  <h2>First experiment round · 19 November 2026</h2>
+  <p>The calibration covered the first task and tested budget accounting before scored collection. It contained zero scored model attempts.</p>
+  <h3>Questions</h3>
+  <ol>
+    <li>Do independently accepted patches increase when the frozen Lean contract is supplied (B versus A), and when prover feedback is available (C versus B)?</li>
+    <li>Which failures does the universal theorem rule out, and which can a behavioral grader detect independently?</li>
+    <li>What are the additional model-token, wall-time, checker and reviewer costs per accepted patch?</li>
+  </ol>
+  <h3>Behavioral grader calibration</h3>
+  <p>Used pinned Lean 4.19.0, SHA-256 verified against the first-round pin, in offline Bubblewrap with read-only inputs and toolchain. A separate Python oracle enumerated every prefix length and selected the longest with a sum within budget. Lean executed the reference and six deliberately wrong implementations against the same vectors. The vectors cover all lists of length zero through four, costs zero through three, and budgets zero through eight, for 3,069 cases per implementation. The three public examples are the ones shown above. No proof output contributed to the score.</p>
+  <table>
+    <caption>Behavior disagreements by implementation</caption>
+    <thead><tr><th scope="col">Implementation</th><th scope="col">Public failures / 3</th><th scope="col">Calibration failures / 3,069</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Reference</th><td>0</td><td>0</td></tr>
+      <tr><th scope="row">Stop at zero remaining budget</th><td>0</td><td>255</td></tr>
+      <tr><th scope="row">Require strict inequality for a fit</th><td>1</td><td>985</td></tr>
+      <tr><th scope="row">Skip an unaffordable item</th><td>1</td><td>796</td></tr>
+      <tr><th scope="row">Recurse without decrementing the budget</th><td>1</td><td>1,041</td></tr>
+      <tr><th scope="row">Always return the empty list</th><td>3</td><td>2,550</td></tr>
+      <tr><th scope="row">Reverse the selected prefix</th><td>2</td><td>1,662</td></tr>
+    </tbody>
+  </table>
+  <p>One batch of seven implementations took 11.34 seconds wall time and 12.58 CPU seconds, with 555 MiB peak process RSS. These figures cover elaborating the generated vectors and executing every candidate in the calibration batch. The reference passed 3,069 of 3,069, and the grader detected all six authored mutants. This supports using independent behavioral grading and shows why the three public examples alone are weak. Freeze additional hidden cases, including longer lists and larger values, before candidate collection. Keep them outside the model's seat.</p>
+  <h3>Scored-run preflight</h3>
+  <p>The checkout and installed copies match v0.6.0. The baseline returned 792 pytest passes with one dependency deprecation warning, and the shell selftest passed. The B70 status reported the server down and the run lock free, with 0.039 GiB in use against its 28 GiB cap on the host. The local model directory contained a manifest and tokenizer, with no runnable local weights staged. Source inspection confirmed that the existing runner has a wall timeout and the rendered model profile has a per-response output limit. The usage tap observes and records backend responses. It forwards requests and has no cumulative admission or stop rule. A per-response limit can be used repeatedly during one patch attempt. Scoring now would omit the approved cumulative budget control.</p>
+  <p><strong>Budget prototype.</strong> Five synthetic controls passed in an in-memory accounting model. With 100 tokens available, a 35-token prompt and a 25-token completion grant reserve 60 tokens. A response that uses 15 completion tokens releases 10. The next 45-token prompt receives only 5 completion tokens. An incomplete response with no usage keeps its full reservation. Concurrent admission while a request is outstanding is refused, and a prompt count mismatch invalidates the attempt. Live accounting still needs a trusted count for the fully rendered prompt, a completion cap enforced by the backend, and reconciliation with backend usage. Cached prompt tokens count toward the same limit, and reported reasoning tokens must not be counted twice when included in completion usage.</p>
+  <p>Before the first scored block, demonstrate a common budget control on synthetic traffic that charges each model request, including retries and tool feedback on the next turn, and ends attempts consistently on budget exhaustion. Validate the chosen backend's usage fields on an unscored request, including partial or cancelled responses. Keep identical compiler commands in all arms and test the C-only proof-feedback route. Record proof feedback obtained through other routes in A or B as contamination. Run the first randomized matched block on the budget task before expanding to the remaining task contracts.</p>
+</section>
+<section id="qwen-kit-audit">
+  <h2>Qwen3-Coder-30B kit audit · 19 November 2026</h2>
+  <p><strong>Premise.</strong> Apply Lean as an additional judge of a patch that passed the profiling kit. Ask whether it finds a confirmed defect that the current grader missed, what the theorem adds to the judgment, and what the check costs. This is a retrospective audit of one saved patch. It uses zero new model calls and cannot estimate whether prover feedback improves model-generated patches.</p>
+  <p><strong>Provenance.</strong> The shipped B70 profile is <code>intel-qwen3-coder-30b-a3b-w4a16-vllm</code>, Intel Qwen3-Coder-30B-A3B-Instruct INT4 AutoRound, revision <code>2e34fa861568584540b3c4f7a47cc1a4a4d88773</code>. The original profile used Intel LLM Scaler 1.5 with the GPTQ runtime metadata override, BF16 KV, TP1, 101,024 tokens of context and OpenCode 1.19.6. The official <code>SUITE-1@1</code> run passed all three counted stages and zero of three references. The S2 verdict was public pass, hidden pass, conformance exit zero, 92/120 changed lines, 168 seconds, 20 requests, and 519,674 prompt plus 2,960 generated tokens. These are the original generator measurements. <a href="https://github.com/KanenasInGreece/a770-builder/blob/v0.6.0/config/registry/b70.inference.json">Shipped B70 registry</a></p>
+  <p><strong>Setup.</strong> Match the S2 label in <code>candidate-suite-20261118-115550-2201506.json</code> to <code>candidate-20261118-120148.patch</code>, SHA-256 <code>5e184ff287b0236a7f22dc505c70f4f7cd9466d17799fc08d3dca2208d5e2cdc</code>. Reconstruct the relevant Python tree from <code>kit/seat@de4d74a</code> and replay the patch. Run Python and pinned Lean 4.19.0 offline in separate Bubblewrap namespaces, with read-only source, grader and tool locations. Replay the kit Python tests and the original hidden grader from the same commit. The contract under test is S2's actual rule that rejected lines contribute to none of its five statistics. S2 defines no consecutive-error statistic. <a href="https://github.com/KanenasInGreece/a770-builder/blob/de4d74a/kit/tasks/s2-backend.md">S2 backend brief</a></p>
+  <p><strong>Native and Lean judgments.</strong> The native grader uses the kit's independent Python reference on new inputs and compares all five fields, including key order. The Lean oracle independently encodes eight literal row types as four valid level/component combinations and four rejected rows. It computes the accepted count and the two level and two component counts. The theorem proves that inserting a rejected row anywhere preserves those counts for all lists in the reference's formal domain. The checked theorem depends on <code>propext</code>. The Python patch was exercised on raw lines with the frozen kit parser. The adapter from raw fixture rows to Lean symbols is an experimental input mapping, and the proof covers the Lean summary function. Time bucketing, Python parsing, rounding and dictionary ordering are outside that theorem.</p>
+  <p><strong>Inputs and endpoints.</strong> Use every sequence of zero through four rows over the eight-symbol alphabet, and a separate 1,000 pseudorandom draws with replacement. The latter generator chooses length uniformly from 0 through 64 and each row independently and uniformly from the alphabet, using Python <code>random.Random(731401)</code> initialized before grading. Each row sequence is one input to the fixed patch and is paired across the two graders. Literal fixtures include minute ties, empty and Unicode messages, a short component, a numeric component, a field declaration, and a missing component. Confirm that the native and Lean expected count projections agree before comparing the candidate.</p>
+  <table>
+    <caption>Observed verdicts on the saved S2 patch</caption>
+    <thead><tr><th scope="col">Check</th><th scope="col">Result</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Original profiling verdict</th><td>S2 pass</td></tr>
+      <tr><th scope="row">Replayed kit tests</th><td>7 public passed, 3 hidden passed</td></tr>
+      <tr><th scope="row">Exhaustive sequences</th><td>4,681 both pass, 0 native-only failures, 0 Lean-only failures, 0 both fail</td></tr>
+      <tr><th scope="row">Random sequences</th><td>1,000 both pass, 0 native-only failures, 0 Lean-only failures, 0 both fail</td></tr>
+      <tr><th scope="row">Deliberately wrong output controls</th><td>Both reject an extra rejected-row count. The native grader rejects a wrong minute tie; that field is outside the Lean oracle.</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Costs and code review.</strong> Five repeat checker invocations took a median 0.25 s wall time (range 0.25–0.26 s), 0.26–0.27 CPU seconds, and about 280–290 MiB peak process RSS each. This includes Lean startup, proof checking and producing all 5,681 vectors' expected counts. One Python run took about 0.10 s to compute the native reference and 0.094 s to execute the patch across those inputs. These boundaries differ, so the timings are diagnostic and do not establish a speed ratio for equivalent checkers. The original model cost was already incurred. Independent reviewer minutes were not measured. A source read found an unused <code>math</code> import and a message-length list whose memory grows with the number of accepted rows. Those maintainability and resource observations are separate from either behavioral verdict.</p>
+  <p><strong>Statistics and confidence.</strong> The 4,681 enumerated inputs constitute the entire declared finite grid. Report exact counts for that grid. For the random sample, zero mismatches in 1,000 draws yields the exact one-sided 95% binomial upper bound <code>1 − 0.05^(1/1000) = 0.2991%</code> on the selected patch's mismatch probability under this specified generator, assuming independent draws. The bound applies to the event that either grader rejects a draw. It does not quantify general log traffic, unmodeled properties, or the probability that future Qwen patches pass. The three official counted stages are heterogeneous and sequential, and the audit covers one selected passing patch. Do not use those stages or the 5,681 input rows as independent model attempts. <a href="https://www.stat.ethz.ch/R-manual/R-devel/library/stats/html/binom.test.html">Exact binomial intervals</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/6827763/">Hanley and Lippman-Hand on zero events</a></p>
+  <p>For future comparisons on the same saved patches, report adjudicated defects and the paired four-cell outcome table at the patch level. On an adequate independent matched sample, a paired score interval can estimate the difference in acceptance proportions and a McNemar-type test addresses directional disagreement. Repeated attempts within a task should be reported by task or analyzed with the task as a cluster. Here there is one audited patch and zero discordant sampled inputs. A test of directional disagreement has no informative result. A separate randomized experiment is needed to estimate whether providing Lean feedback improves patch generation. <a href="https://doi.org/10.1002/sim.6148">Fagerland, Lydersen and Laake on paired proportions</a></p>
+  <p><strong>Result.</strong> The kit pass and the additional Lean-backed judgment agree for the checked property. Lean found zero incremental defects on this patch. Its added assurance is a checked invariant of the reference, together with behavioral agreement of the Python patch on these inputs. This sample supports recording the audit alongside the published profile without altering its score.</p>
+  <details>
+    <summary>Audit source and replay commands</summary>
+    <h3>Oracle.lean</h3>
+    <pre><code>import Init
+
+def key (code : Char) : Option (Nat × Nat) :=
+  match code with
+  | &#x27;0&#x27; =&gt; some (0, 0)
+  | &#x27;1&#x27; =&gt; some (0, 1)
+  | &#x27;2&#x27; =&gt; some (1, 0)
+  | &#x27;3&#x27; =&gt; some (1, 1)
+  | _ =&gt; none
+
+def summarize (rows : List (Option (Nat × Nat))) : List Nat :=
+  let valid := rows.filterMap id
+  [valid.length,
+   (valid.filter fun k =&gt; k.1 == 0).length,
+   (valid.filter fun k =&gt; k.1 == 1).length,
+   (valid.filter fun k =&gt; k.2 == 0).length,
+   (valid.filter fun k =&gt; k.2 == 1).length]
+
+theorem rejected_row (xs ys : List (Option (Nat × Nat))) :
+    summarize (xs ++ none :: ys) = summarize (xs ++ ys) := by
+  simp [summarize, List.filterMap_append]
+
+#print axioms rejected_row
+
+def main : IO Unit := do
+  let stdin ← IO.getStdin
+  let stdout ← IO.getStdout
+  repeat
+    let row ← stdin.getLine
+    if row.isEmpty then break
+    let counts := summarize ((row.toList.filter fun c =&gt; c != &#x27;\n&#x27;).map key)
+    stdout.putStrLn (String.intercalate &quot; &quot; (counts.map toString))</code></pre>
+    <h3>audit.py</h3>
+    <pre><code>from itertools import product
+from pathlib import Path
+import json
+import random
+import sys
+from time import perf_counter
+
+from native_reference import _reference_stats
+from logstats.stats import compute_stats
+
+review = Path(sys.argv[1])
+examples = (
+    &quot;2026-02-01T10:01:01Z INFO api accepted&quot;,
+    &quot;2026-02-01T10:00:10Z INFO db &quot;,
+    &quot;2026-02-01T10:00:12Z ERROR api β&quot;,
+    &quot;2026-02-01T10:01:05Z ERROR db failed again&quot;,
+    &quot;2026-02-01T10:01:10Z ERROR x short component&quot;,
+    &quot;2026-02-01T10:00:12Z ERROR 007 numeric component&quot;,
+    &quot;2026-02-01T10:00:14Z ERROR component: field declaration&quot;,
+    &quot;2026-02-01T10:00:16Z ERROR  missing component&quot;,
+)
+assert [_reference_stats([row])[&quot;total_lines&quot;] for row in examples] == [1]*4 + [0]*4
+
+rng = random.Random(731401)
+groups = {
+    &quot;exhaustive&quot;: [&quot;&quot;.join(row) for n in range(5) for row in product(&quot;01234567&quot;, repeat=n)],
+    &quot;random&quot;: [&quot;&quot;.join(str(rng.randrange(8)) for _ in range(rng.randrange(65))) for _ in range(1000)],
+}
+if sys.argv[2] == &quot;prepare&quot;:
+    print(&quot;\n&quot;.join(row for rows in groups.values() for row in rows))
+    sys.exit()
+
+def project(stats):
+    levels = stats[&quot;by_level&quot;]
+    components = stats[&quot;by_component&quot;]
+    assert levels.keys() &lt;= {&quot;INFO&quot;, &quot;ERROR&quot;} and components.keys() &lt;= {&quot;api&quot;, &quot;db&quot;}
+    return [stats[&quot;total_lines&quot;], levels.get(&quot;INFO&quot;, 0), levels.get(&quot;ERROR&quot;, 0),
+            components.get(&quot;api&quot;, 0), components.get(&quot;db&quot;, 0)]
+
+def same_stats(actual, expected):
+    return actual == expected and all(
+        list(actual[key]) == list(expected[key]) for key in (&quot;by_component&quot;, &quot;by_level&quot;)
+    )
+
+counts = (review / &quot;lean.stdout&quot;).read_text().splitlines()
+axioms = counts.pop(0)
+assert axioms == &quot;&#x27;rejected_row&#x27; depends on axioms: [propext]&quot; or axioms == &quot;&#x27;rejected_row&#x27; does not depend on any axioms&quot;, axioms
+expected_lean = [list(map(int, line.split())) for line in counts]
+assert len(expected_lean) == sum(map(len, groups.values()))
+assert all(len(row) == 5 for row in expected_lean)
+expected_lean = iter(expected_lean)
+results = {}
+for name, vectors in groups.items():
+    inputs = [[examples[int(code)] for code in vector] for vector in vectors]
+    t = perf_counter()
+    native = [_reference_stats(row) for row in inputs]
+    native_s = perf_counter() - t
+    t = perf_counter()
+    actual = [compute_stats(iter(row)) for row in inputs]
+    candidate_s = perf_counter() - t
+    lean = [next(expected_lean) for _ in inputs]
+    assert all(project(want) == expected for want, expected in zip(native, lean))
+    results[name] = {
+        &quot;n&quot;: len(inputs),
+        &quot;agreement&quot;: {
+            &quot;both_pass&quot;: sum(same_stats(got, want) and project(got) == answer for got, want, answer in zip(actual, native, lean)),
+            &quot;native_only_failure&quot;: sum(not same_stats(got, want) and project(got) == answer for got, want, answer in zip(actual, native, lean)),
+            &quot;lean_only_failure&quot;: sum(same_stats(got, want) and project(got) != answer for got, want, answer in zip(actual, native, lean)),
+            &quot;both_fail&quot;: sum(not same_stats(got, want) and project(got) != answer for got, want, answer in zip(actual, native, lean)),
+        },
+        &quot;native_reference_s&quot;: native_s,
+        &quot;candidate_s&quot;: candidate_s,
+    }
+
+control = [examples[0], examples[4]]
+good = compute_stats(iter(control))
+expected = project(_reference_stats(control))
+assert project(good) == expected
+false_count = dict(good, total_lines=good[&quot;total_lines&quot;] + 1)
+late_minute = [examples[0], examples[1]]
+late = dict(compute_stats(iter(late_minute)), busiest_minute=&quot;2026-02-01T10:01&quot;)
+assert project(false_count) != expected and not same_stats(false_count, _reference_stats(control))
+assert project(late) == project(_reference_stats(late_minute)) and not same_stats(late, _reference_stats(late_minute))
+results[&quot;controls&quot;] = {&quot;extra_rejected_count&quot;: &quot;both reject&quot;, &quot;wrong_minute_tie&quot;: &quot;native rejects, Lean outside contract&quot;}
+results[&quot;random_one_sided_95_upper_if_zero&quot;] = 1 - 0.05 ** (1 / len(groups[&quot;random&quot;]))
+print(json.dumps(results, indent=2))</code></pre>
+    <h3>Offline replay</h3>
+    <pre><code>set -euo pipefail
+p=$1
+ns=(--unshare-net --unshare-pid --die-with-parent --clearenv --ro-bind /usr /usr --ro-bind /etc /etc --proc /proc --dev /dev --tmpfs /tmp --symlink usr/lib64 /lib64 --symlink usr/lib /lib --symlink usr/bin /bin --ro-bind &quot;$p/review&quot; /review --setenv HOME /tmp --setenv LANG C.UTF-8)
+timeout 45 bwrap &quot;${ns[@]}&quot; --ro-bind &quot;$p/lean-4.19.0-linux&quot; /tool --setenv PATH /tool/bin:/usr/bin -- /usr/bin/time -f &#x27;wall=%e user=%U sys=%S peak-process-KiB=%M&#x27; /tool/bin/lean -DwarningAsError=true --run /review/Oracle.lean &lt; &quot;$p/review/vectors.txt&quot; &gt; &quot;$p/review/lean.stdout&quot;
+pydeps=()
+for pair in pytest:a45MUc_YUy_f8hJO packaging:5Lwq9JFVfmhNia8b iniconfig:Fs5ylu9DZdskwZBF pluggy:uPg15zaAv2NH5aE0; do
+  pydeps+=(--ro-bind &quot;$HOME/.cache/uv/archive-v0/${pair#*:}&quot; &quot;/deps/${pair%:*}&quot;)
+done
+timeout 45 bwrap &quot;${ns[@]}&quot; --ro-bind &quot;$p/seat&quot; /seat &quot;${pydeps[@]}&quot; --chdir /seat --setenv PATH /usr/bin --setenv PYTHONDONTWRITEBYTECODE 1 --setenv PYTHONPATH /seat/python:/deps/pytest:/deps/packaging:/deps/iniconfig:/deps/pluggy -- /usr/bin/bash -ec &#x27;
+ /usr/bin/python3 -m pytest -p no:cacheprovider -q python/tests
+ /usr/bin/python3 -m pytest -p no:cacheprovider -q /review/native_reference.py
+ /usr/bin/python3 /review/audit.py /review grade
+&#x27;</code></pre>
+  </details>
+</section>
+<section id="builder-study-brief">
+  <h2>Builder comparison protocol</h2>
+  <p>This protocol defines the three builder conditions. It records the proposed setup and required rehearsals. The frozen proposal below documents what was specified before scored collection. The builder experiment section reports the campaign. The earlier kit audit used a saved Qwen patch.</p>
+  <p>Astra reviewed the brief before finalization. The revisions define the feedback contrast as the offer of a dedicated helper, specify one official outcome per assigned slot, condition the interval on the fixed task roster, and require a complete unscored block before scoring. The brief distinguishes mechanical behavioral acceptance, blinded maintainability ratings, and proof acceptance.</p>
+  <h3 id="builder-study-preflight">Unscored rehearsal preflight · 2026-11-19</h3>
+  <p>The pinned Lean 4.19.0 archive matched the recorded SHA-256. A correct <code>Pilot.takeBudget</code> control passed the public and hidden behavioral checks. A control that stops at zero remaining budget passed the public examples and failed three hidden cases. The reviewer-owned theorem wrapper accepted the positive proof and rejected a placeholder, an unapproved axiom, a weakened statement and a statement about a different opaque function. The dedicated helper returned the current implementation SHA-256 with its goal diagnostic.</p>
+  <p>The pinned B70 vLLM server reported 247 logical prompt tokens for a request containing a tool schema, matching the bridge’s preflight count. The server consumed one completion token under a one-token grant. The next request was refused upstream of generation. Ten synthetic quota and bridge checks covered request ceilings, concurrency, missing and mismatched usage, and the streaming receipt. A separate two-second timeout control captured an edit and reapplied it to a fresh clone.</p>
+  <p>The first block setup stopped before builder dispatch when the Python Unix socket server rejected a path object. The retry uses the qualification’s pinned OpenCode 1.19.6. The workstation’s 2.2.0 client rejected the harness’s <code>run --dir</code> option in a synthetic smoke test. The image trust scan used the original helper on a disposable, privately SELinux-labeled copy. These checks are excluded from the study.</p>
+  <p><a href="lean-builder-runs/takebudget-rehearsal/live-quota-probe.json">Live quota receipt</a></p>
+  <h3 id="builder-study-rehearsal">Unscored three-arm block · 2026-11-19</h3>
+  <p>All three attempts produced distinct, in-scope <code>Pilot/Impl.lean</code> patches. Each reapplied to the frozen baseline and passed the public examples and six hidden cases. The bridge reconciled 51 generation requests with no invalidated metering, quota stops or timeouts in the block. The block used 309,246 logical prompt tokens, 7,255 completion tokens and 398.2 seconds of builder wall time. Individual attempts took 44.8–240.6 seconds. The builder did not invoke the dedicated helper. The separate offline control exercised helper diagnostics across two revisions.</p>
+  <p>Supplemental offline replay took 0.47–0.51 CPU seconds per patch across public and hidden checks. The largest single-process peak RSS reading was 293,160 KiB. An initial timing run placed the clock outside Bubblewrap and missed the Lean process’s resources. The reported replay figures use in-seat timing. These replay figures describe individual process RSS. The separate helper controls report fresh-cgroup peak memory.</p>
+  <p>The blind packet contains the common prose contract, rubric and three opaque patches. The blind human reviewer spent 5 minutes across the three distinct patches. All three received no contract-fidelity findings. Two received no maintainability findings. The formal-contract-only patch (B) received one minor maintainability finding for <code>acc ++ [head]</code>, which copies the accumulated prefix on each accepted item and has quadratic worst-case cost. The reviewer flagged the nested helper and accumulator as a possible arm clue. The recorded arm was formal contract only. All three retained their mechanical passes. The per-attempt cost table and arm key are separate from the packet. This single unscored block provides no estimate of either treatment effect. The roster, graders and manifest were reviewed and frozen for the completed scored campaign.</p>
+  <p><a href="lean-builder-runs/takebudget-rehearsal/block-02/blind-review.zip">Blind review packet</a></p>
+  <p>The independent review of the proposed scored roster clarified the Lean types for severity, minute selection and state events. The revised interval contract specifies start ordering, strict gaps and equality of covered naturals. Plain field projection remains the proposed low-benefit comparison, with its ceiling effect flagged for task-level reporting. The operator approved the revised roster. The eight exact Lean propositions elaborated on Lean 4.19.0. Offline replay in standalone clones accepted eight known-good patches and rejected eight targeted faults that passed the public examples. The eight stubs also failed both checks. The helper emitted candidate-linked diagnostics on each task. Fresh user cgroups measured 0.291–0.336 CPU seconds and about 78–85 MiB aggregate peak memory for these diagnostic controls. The operator approved the exact package and limits. The scored campaign began with the frozen 40-block schedule after a live sampling and usage check and an offline proof-capture check. A first launcher smoke failed during empty-patch capture before dispatch. The corrected launch recorded a metered request in the first scored attempt. <a href="lean-builder-runs/scored-study/run-02/manifest.json">Approved run manifest</a>. <a href="lean-builder-runs/scoring-draft/sign-off.md">Scored study sign-off package</a>. <a href="lean-builder-runs/scoring-draft/roster-for-review.md">Revised roster</a></p>
+
+  <p><a href="lean-builder-experiment-brief.md">Copyable Markdown experiment prompt</a></p>
+  <details>
+    <summary>Full experiment prompt</summary>
+    <pre><code># Run the A770-builder Lean comparison
+
+## Question and why it matters
+
+Using the shipped Intel Qwen3-Coder-30B-A3B-Instruct INT4 AutoRound B70 profile, does giving the builder a formal Lean contract or access to a dedicated proof-feedback helper increase the proportion of bounded patches independently accepted at the same resource limits? Does it improve behavioral correctness without making the code harder to maintain or the workflow disproportionately expensive?
+
+The kit audit compared graders on a patch the model had already written. This experiment changes what the model receives before and during generation. If a formal contract alone helps, the skill could gain without an interactive prover dependency. If feedback adds value, its benefit must justify checker, model, and reviewer costs. The first comparison uses Lean-native tasks so proof feedback concerns the delivered function directly. A later polyglot kit experiment can compare native invariant checks and a proved reference on the actual foreign-language outputs. Its result is behavioral evidence on exercised inputs.
+
+## Freeze the setup before scoring
+
+- Use repository profile `intel-qwen3-coder-30b-a3b-w4a16-vllm`, checkpoint revision `2e34fa861568584540b3c4f7a47cc1a4a4d88773`, the recorded B70 recipe, and a single pinned OpenCode version. Record checkout commit, exact profile hash, backend/image identity, Lean/Lake archive digest, compiler command, effective sampling parameters, and cache/reset policy. Use the same settings in every arm. Pair seeds where the backend honors them and record evidence of support. Otherwise use independently initialized sessions and pair by task/repetition.
+- Freeze eight reviewed tasks and their standalone baseline commits. Candidate roster: longest affordable prefix, log-count aggregation over normalized rows, minute selection with ties, interval coalescing, stable deduplication, sorted merge with multiplicities, bounded state transition, and a routine field projection as a low-benefit comparison. The roster is a proposal until the exact contracts, edit scopes, public examples, and graders are signed off. Use the existing `takeBudget` contract for the first engineering rehearsal. Rehearsal attempts are excluded from the study. Keep the proved sample implementation and private article out of all seats.
+- For each scored task freeze the prose contract, frozen Lean proposition, allowed source files, compiler command, public examples, hidden behavioral tests, and blind rubric. Hash them before candidate collection. Use known-good and deliberately faulty controls to validate the graders, including a fault public tests miss. Record false accepts and rejects. Freeze hidden test inputs outside the candidate seat.
+- Proposed starting limits for preflight: 900 seconds of builder wall time, 600,000 cumulative prompt-plus-completion tokens, at most 12,000 cumulative completion tokens, and a 4,096-token per-response ceiling. These are design choices to validate on unscored rehearsals. Publish the final values in the manifest before scoring, then apply them identically. Bill cached prompts at their logical token count. Count reasoning once when included in completion usage.
+- Validate the backend budget control before scoring. Use trustworthy counts for fully rendered requests, reserve each request&#x27;s prompt tokens and allowable completion before it reaches the backend, and enforce the remaining completion grant upstream. Charge retries and tool context. Check missing or cancelled usage, concurrent requests, and count mismatches. Treat untrustworthy metering as infrastructure invalidation and retain its evidence. A per-response ceiling or a post-run tally alone cannot enforce the cumulative limit.
+- Validate an equivalent compiler path for A, B, and C. Offer only C a reviewer-owned offline proof helper that links the frozen obligation to the candidate function and returns goal or proof diagnostics. All arms retain the ordinary Lean compiler, which itself can give proof diagnostics if a builder writes an example or theorem. Define C minus B as the intent-to-treat effect of offering the helper. Record organic proof use in every arm. A or B reaching the dedicated helper is contamination, as is A seeing the frozen theorem. Before scoring, show that C can use the helper, that A and B cannot invoke it, and that common build and public-check commands behave identically. Keep scratch proofs outside the final implementation patch. Record proof attempts and the diagnostics actually surfaced. Grade optional proof artifacts separately using reviewer-controlled theorem identity and axiom policy. Never use a candidate-controlled success flag as proof.
+- Use clean standalone seats, fresh histories, identical allowed tools apart from the intervention, and no network beyond the designated model bridge. Before scoring, complete one unscored A/B/C rehearsal through blind patch replay and cost export. Keep its exact manifest and invocations. Exercise quota exhaustion and timeout with recoverable capture. Verify that the proof checker rejects a placeholder, unapproved axioms, a weakened proposition, and a proof about the wrong function. Verify that C diagnostics link to the current candidate revision.
+
+## Builder prompt
+
+Give every builder the following core prompt with the bracketed fields filled from the frozen task manifest:
+
+&gt; Implement [FUNCTION AND SIGNATURE] in [ALLOWED SOURCE FILE]. The input domain, required outputs, edge cases, and caller expectations are [FROZEN PROSE CONTRACT]. Work in this standalone seat and modify only the named implementation source. Use [IMPLEMENTATION COMPILER COMMAND] and [PUBLIC EXAMPLE COMMAND] to check your work. The deliverable is the implementation patch. Stop when the implementation is ready within the supplied attempt limits. Report the files changed and the public check result.
+
+- A receives only the core prompt and the common task materials.
+- B appends: “The reviewer’s formal contract is [FROZEN LEAN PROPOSITION]. Use it as a reference for the intended behavior.”
+- C appends the B paragraph plus: “You may run [REVIEWER-OWNED PROOF COMMAND] on scratch attempts to inspect proof obligations and goal diagnostics for your implementation. Scratch proofs are optional and outside the required patch.”
+
+Keep the substantive behavioral requirements equivalent across arms. A missing requirement in the prose would confound the effect of formalization with extra information. Keep the private graders and prior solutions inaccessible to the model.
+
+## Run and grade
+
+Use five matched repetitions per task, 40 attempts per arm and 120 attempts overall. The proposed wall cap implies up to 30 serial builder-hours before rehearsals and reruns. Record a seeded randomized task/block order and randomize A/B/C order within blocks. Give each attempt its own fresh seat and opaque ID. Reapply the captured patch to the frozen base for grading. Run behavioral grading independently of the proof outcome and public grade so a proof failure cannot suppress the primary outcome. The primary pass is mechanical: a present implementation patch, declared edit scope, clean application, and all frozen hidden checks. Blind human findings do not veto the primary pass. Rate maintainability and contract fidelity separately using prespecified categories (no finding, minor, material) with examples and an adjudication rule frozen before scoring. Count identical patches as separate assigned attempts. For exact duplicates, reuse the blind rating and report separately how often the reviewer did fresh work. Keep reviewers blind to arm, timing, and proof transcript when they judge the implementation. Report grader disagreements and how they were resolved. Classify missing deliverables and effective budget exhaustion as unsuccessful attempts. Assign exactly one official outcome per scheduled slot. A complete original block is official. If infrastructure invalidates any slot, retain the original block and rerun the whole block once with the same assignment and fresh seats after resolving the cause. A complete valid rerun replaces all three original outcomes, including the original valid siblings. If that rerun is also invalid, retain the original valid outcomes and mark the original invalid slots unresolved. Publish the effective 40 assigned slots per arm, the resolved denominator, complete-pair counts, and worst/best bounds that allow every unresolved slot to be a pass or fail. Keep contaminated runs in the assigned-arm analysis and show sensitivity excluding affected blocks. Record all discarded runs and include their cost in a separate total experiment cost.
+
+## Measure, analyze, and decide
+
+- Primary measure: independently accepted implementation patches per assigned attempt, with valid-run counts and invalidations disclosed. Main contrasts are B minus A (contract context) and C minus B (prover feedback). Report each task&#x27;s both-pass, first-arm-only pass, second-arm-only pass and both-fail counts, then the paired percentage-point difference and 95% interval. Treat the eight tasks as a fixed roster and give them equal weight. For complete data, compute a conditional 95% percentile interval by resampling whole matched repetitions within each task, five with replacement, for 20,000 seeded bootstrap draws. Aggregate equally over the eight tasks in each draw. For missing data, report complete-pair estimates by task with their counts and worst/best bounds for the assigned contrast. Any complete-pair interval resamples the available pairs per task and describes only the resolved subset. Suppress it when a task has no complete pairs. Flag small per-task sample sizes and degenerate bootstrap intervals, which do not establish equivalence. Show all task differences and leave-one-task-out sensitivity. The interval describes repetition-level uncertainty for this fixed task mix under independent blocks within task. It does not generalize to unseen tasks. Treat both contrasts as exploratory in this pilot.
+- Secondary measures: proof attempted, produced, and independently accepted among attempts with and without scratch output, hidden behavioral failure categories, blinded review results, timeouts, token-limit stops, infrastructure failures, prompt/completion/optional reasoning counts, builder wall time, checker CPU time and aggregate peak memory, contract preparation and reviewer minutes. Report medians and ranges and all p95 sample sizes. Report incremental proof-helper setup and reusable contract preparation separately from recurring checker and reviewer cost. Count recurring reviewer minutes on unsuccessful patches too. Report cost per accepted patch as total official arm cost including unsuccessful attempts divided by accepted patches. If an arm has zero passes or the comparator cost per accepted patch is zero, report the relevant cost or relative ratio as undefined.
+- Before collecting results, freeze these provisional thresholds or document any agreed change: at least four net additional accepted patches per 40 matched attempts (+10 points) over the comparator, no more than 20% extra tokens and 20% extra wall time per accepted patch, checker p95 at most 5 CPU seconds and 1 GiB aggregate peak memory, plus at most 5 extra reviewer minutes per patch and 30 minutes per task for contract preparation/review. Meeting a point threshold with a wide interval supports replication, not a definitive claim. Report null, negative and inconclusive findings.
+
+## Record everything privately
+
+Keep the experiment manifest, schedule, patches, redacted usage/tool traces, grader receipts, review forms, per-attempt table and analysis under `A770_Builder/results/research/lean-builder-runs/&lt;study-id&gt;/`. Use one row per attempt with study/task/block/attempt IDs, arm, order, seed, profile/base/contract/grader hashes, patch artifact, applied/scope/public/hidden verdicts, blind review findings, proof outcome, usage, resource costs, stop reason, contamination, and invalidation/rerun links. Keep the arm key separate from blind review materials. Strip arm-identifying filenames, logs and metadata from review packets. Preserve the actual implementation text, and record any clues in the code that compromise blinding. Preserve machine-readable paired counts and interval calculations. Store no credentials in captures.
+
+Summarize the question, frozen setup, deviations, raw counts, paired effects with intervals, costs, and null or negative findings in `A770_Builder/results/research/lean-and-local-build.html`. Identify the exact code and theorem covered. Label rehearsals and synthetic controls distinctly from scored trials. Keep both the brief and evidence Git-ignored. Do not change the published kit score based on this experiment.</code></pre>
+  </details>
+</section>
+</details>
+</main>
+
+</body>
+</html>

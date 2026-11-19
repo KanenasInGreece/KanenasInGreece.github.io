@@ -1,0 +1,485 @@
+{
+  "scored": true,
+  "seed": 20261120,
+  "schedule": [
+    {
+      "task": "span",
+      "repetition": 1,
+      "arm_order": [
+        "C",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "task": "inside",
+      "repetition": 2,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "inside",
+      "repetition": 4,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "span",
+      "repetition": 3,
+      "arm_order": [
+        "C",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "task": "deadline",
+      "repetition": 2,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "cap",
+      "repetition": 3,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "balance",
+      "repetition": 4,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "split",
+      "repetition": 4,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "clip",
+      "repetition": 3,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "split",
+      "repetition": 2,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "deadline",
+      "repetition": 1,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "inside",
+      "repetition": 1,
+      "arm_order": [
+        "B",
+        "A",
+        "C"
+      ]
+    },
+    {
+      "task": "inside",
+      "repetition": 3,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "balance",
+      "repetition": 2,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "balance",
+      "repetition": 1,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "deadline",
+      "repetition": 5,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "balance",
+      "repetition": 3,
+      "arm_order": [
+        "C",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "task": "renew",
+      "repetition": 1,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "deadline",
+      "repetition": 3,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "split",
+      "repetition": 1,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "cap",
+      "repetition": 1,
+      "arm_order": [
+        "B",
+        "A",
+        "C"
+      ]
+    },
+    {
+      "task": "clip",
+      "repetition": 1,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "clip",
+      "repetition": 2,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "clip",
+      "repetition": 5,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "span",
+      "repetition": 2,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "cap",
+      "repetition": 5,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "split",
+      "repetition": 5,
+      "arm_order": [
+        "B",
+        "A",
+        "C"
+      ]
+    },
+    {
+      "task": "renew",
+      "repetition": 3,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "balance",
+      "repetition": 5,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "span",
+      "repetition": 5,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "renew",
+      "repetition": 5,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "cap",
+      "repetition": 2,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "renew",
+      "repetition": 2,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "cap",
+      "repetition": 4,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "clip",
+      "repetition": 4,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "deadline",
+      "repetition": 4,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "inside",
+      "repetition": 5,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "span",
+      "repetition": 4,
+      "arm_order": [
+        "B",
+        "A",
+        "C"
+      ]
+    },
+    {
+      "task": "split",
+      "repetition": 3,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "renew",
+      "repetition": 4,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    }
+  ],
+  "planner_limits": {
+    "wall_seconds": 180,
+    "logical_tokens": 120000,
+    "completion_tokens": 3500,
+    "completion_per_response": 2048
+  },
+  "builder_limits": {
+    "wall_seconds": 900,
+    "logical_tokens": 600000,
+    "completion_tokens": 12000,
+    "completion_per_response": 4096
+  },
+  "known_valid_plan_tasks": [
+    "cap",
+    "inside",
+    "renew",
+    "span"
+  ],
+  "adoption_gain_pp": 10,
+  "maximum_cost_increase": 0.2,
+  "profile": "intel-qwen3-coder-30b-a3b-w4a16-vllm",
+  "initial_plan_prose": {
+    "cap": "Compute unused allowance and take the smaller of it and the request.",
+    "inside": "Check both endpoints inclusively against the point.",
+    "renew": "Take the later of the current expiry and now, then add the extension.",
+    "span": "Add the chunk to the offset and cap the sum at the total.",
+    "balance": "Compare the requested spend directly with the available balance.",
+    "clip": "Cap the point at the upper endpoint.",
+    "deadline": "Use the primary deadline whenever available, otherwise use the backup.",
+    "split": "Allocate the first destination its whole capacity, then return the remainder."
+  },
+  "baseline_commits": {
+    "balance": "6bf0280ed72ac18cef26ec318018073739ff7a4f",
+    "cap": "ae68f727f22e17b0c7b10f5057d7718a8c8a3648",
+    "clip": "9a0cf320d7e25b1b2a7e7afb7ec85c29bde13c23",
+    "deadline": "26d9c0e93d90a75fb3a39ec5e0903a84a9ddb913",
+    "inside": "efa1f3a5d4a2480ca50c4ed5f571f4c53f9fde66",
+    "renew": "2835867e84177c901b0d141c48a431d657e740a8",
+    "span": "5fc84e492297cf8bdef5b5cc21f9469e9549cd14",
+    "split": "a34eecc598dde34c0f39bc94ac1ac1c5eee38baf"
+  },
+  "profile_registry_sha256": "7f65bca1998ba8dd1d86adedfb945507f72281f58967300d37cb8b606a6cda47",
+  "opencode_sha256": "aab0a58cd7fc5a1f17495b76c08e79989d331653d8b63156aca2f6e9e36d1173",
+  "runner_sha256": "a23692a5432c40eed6208a4711914351394dcc898441686ee1c8e84fe99b179c",
+  "lean_archive_sha256": "6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe",
+  "task_hashes": {
+    "balance": {
+      "Contract.lean": "9fc6a56a8ac23542384273aa3ce502505cdfe206e0cd9d66a51b282fbf6d7c01",
+      "Good.lean": "6bf65bd8352fec059a7aa250b79ca5d346151d81642f56093138f7f1342cc0c6",
+      "Hidden.lean": "7e4a80bf45a41fccaf0eef98458680d52360023db7dc69b6b53bedba5b81c7f4",
+      "Plan.lean": "0bd295e4dfb3fbf08c3022128920c682c49fe6fc10876c7c2619cd8aeb55213b",
+      "Public.lean": "8f07eaf7bbdc9ee7282b6fac5fe4a62c08b83b3e6eae1f65b4d922e691e029e0",
+      "ReferenceProof.lean": "3023312b9607ba34fe9d2d1734bef5156b90ed7fd8b9bab2245fc19323be0943",
+      "requirement.md": "10490e95fc19fd07b6b69a548a9d7f58817944802078e4ad297e9250f49f25d8"
+    },
+    "cap": {
+      "Contract.lean": "bc0ac10054edef6fc57df7e7117be5bccfad8300e8d623b1fa8c94f03148d2ea",
+      "Good.lean": "91120ab9045861166622f49ed304924e7212a40ac438c92e19285996376c99f6",
+      "Hidden.lean": "c2fc15220536b1b15506178ee7ffbf34b657dae5635c996967ca9d8a454a2f6b",
+      "Plan.lean": "a6aef71ec7be12d9a633971bb53f34e6f0ce3f4d7dea9349b17334f8d0d32e71",
+      "Public.lean": "6dae8b0471d2eb8e02c718d6452422a783c116bebca74f4748e6c6b715d483c8",
+      "ReferenceProof.lean": "85f8cba1a5f54536cd961fe789fc5c206762375049116477f0ffc832dba94cef",
+      "requirement.md": "a55a23f0de1ab5d38e7a8d485fe4f46089662efad1692334e8ed4a2b86105608"
+    },
+    "clip": {
+      "Contract.lean": "ceebef349a21c95a861ad1da1e58b994a83f64efec896ae1f51672efcaf63746",
+      "Good.lean": "5be2cba29f6b750d307a28182dc042c6b00e78da25f13af2b74812891d96f9bb",
+      "Hidden.lean": "05d32addf2402a0a894544c7e8f44e737175f3f766c97f946badc06f969a4a7e",
+      "Plan.lean": "005fc6c340005dce515780ee73552947568096b94b87c63c1a65ec3f65764c63",
+      "Public.lean": "37b59952e2ca323df0a545bdab8a4d90c6909203eee69aec02c1940173c5f6d6",
+      "ReferenceProof.lean": "b96fc179855d80f5fb30e3097cd81a9b6c5ddff14238efdbb5fc857c75b70b42",
+      "requirement.md": "ecca91a25ecf16ae0cc80b1856338a4e417738576e37baa9dc8a861f3c746218"
+    },
+    "deadline": {
+      "Contract.lean": "74090ffd9f6928f4120d002bd77adbb5a992d744ec5a93d6202d9827b9e6b298",
+      "Good.lean": "c1cb83ea2304a6d267378dc7bfff89bb767476d365c874086f763acd38e15e67",
+      "Hidden.lean": "2399766c43d9f3a342afaef498f86842456114b915a1cf328e99a1d42c8d94e8",
+      "Plan.lean": "d9fcbf471750c0d8c4438fbd96850c5d630d01dbe15a37db92a953277726861e",
+      "Public.lean": "3fd1f42342e236a2bf35bc97a998123b27556e83501f17b12f7ebd862432d1df",
+      "ReferenceProof.lean": "6f47b773230b99024af40d56c11ad8fd3d83b71969d750b3b1f55e87f22006d2",
+      "requirement.md": "b2389a94e27ba8f674542840b47ff04562a7b9c631a8246e88a465b1eeafa4ad"
+    },
+    "inside": {
+      "Contract.lean": "f258865d809f4d0ed255c6ead838fc5c4c58e66af23aa7e955c0ceb9e7b1173f",
+      "Good.lean": "dbf1f91279d3ba122f0b40d09ca1121df366424884ec9c181815c2705638683a",
+      "Hidden.lean": "64f35cf6001981d3c22ba125cc487ea9865157d476e1bc22bfebde23eeaf640c",
+      "Plan.lean": "bfea77a9062c979ff2c047a17f23491b9b83f871b0e0efb4720998aab17785e5",
+      "Public.lean": "fec567b1190a36f73faca51afb627b30c872bd884f5feda82489c243d31d5a91",
+      "ReferenceProof.lean": "23c3e6724ef0561470b6715ceb896421a84efd9001e35b6ba7a4c77a7693e61e",
+      "requirement.md": "5b3d77eb315007530bbb40d0ca69662944b7ea173c54ac80f411ffa2eee434b7"
+    },
+    "renew": {
+      "Contract.lean": "305c1020400de10dcb643a7a61b35346911629fcb3c8b85a577cac76543559bb",
+      "Good.lean": "427459510d49c3dbe6a1b4f4a3da385bdc073beaf670a1a3e77c5e8ed6c7080b",
+      "Hidden.lean": "faf198a9b1921455fd89b03d5cbc565f3b6d786c425f661aba0855d3e1fed957",
+      "Plan.lean": "549d7a68eb9f2d487b5d266b75d26f24dd0b05997052a4e1b5bd95eabbb02b8a",
+      "Public.lean": "43eb4cbee827bb1d2c0ba93659fc52fd3172fef8623ef8472c9ffe300e4a4e12",
+      "ReferenceProof.lean": "6f9733a70f851212facba6115520c64cf5f0466771f433d22cd248a3c8c733c9",
+      "requirement.md": "de0a049ac7953c65b1e410a5a1e8f40e05fc35929e33de3e62d1066de3ff097a"
+    },
+    "span": {
+      "Contract.lean": "338c2c7a5e0ae62327c4de129a587234703f948510e7db9a25c592a9ac06a72b",
+      "Good.lean": "b9dd81a41516428c4aea2c9c03305f2f4516861cc601cd1710bb509b0b175e06",
+      "Hidden.lean": "7cfedf369f4ba40c8489af274be9f91b40497371882dd0600cc797ad582d1607",
+      "Plan.lean": "cf6098c9fc169dbb1ac92b766e8ba391c930fd497d9ef267e3410e0d1f10ad2f",
+      "Public.lean": "cd1f15d93f155f1f51d9c13ad9002fe04bedb100819441ec3800c7021e1b681f",
+      "ReferenceProof.lean": "84754b7132220b8f0c836b9a7b8f626e7f5a7baea09079c57539257b334d9aac",
+      "requirement.md": "154824f3678244a9ca6b37a17c7b3da4ebc051a9ad0e217fd281157ac8066226"
+    },
+    "split": {
+      "Contract.lean": "7ec7ae33ee28a9f716567d1c14409b43782ee18568e4946a6e02caee895d7b6d",
+      "Good.lean": "a5f27fe11e05cf63204ebe929c5ee5478aea81920227cdbf0ebf12ebc48aa3fc",
+      "Hidden.lean": "a8167c064cf8207282e6dad8ed183c020aaf06f31260f2f99d569d38989d29cb",
+      "Plan.lean": "01a925f60fb4f61e7d51e1a89e85bf16173fda2362e97bab9ec91885f6e63aa7",
+      "Public.lean": "a112208836c14583d7d7fc81a1d3fb8c9085b9543fe669138bc929bf5d92a8c5",
+      "ReferenceProof.lean": "b4c26357626ca9438d5f02a26aad4f09f76954d74321b2cbd0048d16ff54fd5f",
+      "requirement.md": "102dfb580e576b84c7b3d129c4c25ee0d7efca2f7758d405ad92ea8f5cf756ef"
+    }
+  }
+}

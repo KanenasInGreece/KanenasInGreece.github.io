@@ -1,0 +1,586 @@
+{
+  "status": "operator_approved",
+  "lean_archive_sha256": "6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe",
+  "profile": "intel-qwen3-coder-30b-a3b-w4a16-vllm",
+  "checkpoint_revision": "2e34fa861568584540b3c4f7a47cc1a4a4d88773",
+  "opencode_version": "1.19.6",
+  "limits": {
+    "wall_seconds": 900,
+    "logical_tokens": 600000,
+    "completion_tokens": 12000,
+    "completion_per_response": 4096
+  },
+  "order_seed": 20261119,
+  "engine_image_digest": "sha256:d321efe647fbde0ebcc710e83e1ebddf3bf6d698416ef09f29537d8144df6aa5",
+  "registry_sha256": "7f65bca1998ba8dd1d86adedfb945507f72281f58967300d37cb8b606a6cda47",
+  "opencode_sha256": "aab0a58cd7fc5a1f17495b76c08e79989d331653d8b63156aca2f6e9e36d1173",
+  "validation_sha256": {
+    "validation.json": "df0e79eb7d5ffed20ffdc802cb917282a3bfb04f494f2e0f7b3871abee40beb3",
+    "bundle-validation.txt": "491acec1223f4032b89bdf798bc960a761287c44111e8a1b3774a01f1568c52a",
+    "helper-validation.txt": "92551f27f4fac8d86900e128c5547ac04def07a25b4eb0204157c4220da5b947",
+    "proof-validation.txt": "dec8e4379ec0e210c4d80bb135286102770ca08150960fece8c4662641bc5963"
+  },
+  "helper_sha256": "607d787b3698dc5ec013dfc2a87cbbbec0145f56a25ebbd09b66654e3fbe4601",
+  "proof_acceptance_sha256": {
+    "Accept.lean": "2e55a133627b283994ca6c5dd37c1bbc8f4e58fc5fb4c661f8b774b6f6bd0f13",
+    "check-proof": "3fb6b1f230c7c1dc3cefdf72aab38546eee5344a3e9c34cbf725d78f4726c855"
+  },
+  "checker_measurement_sha256": "11d05af000dd1fad8ca05f3d9dcd0e294377c066b995a8ee0f7135aa59c4f8fe",
+  "tasks": [
+    {
+      "task": "prefix",
+      "base_commit": "03931dd7400a78700ecd7f7ea264f954419674c9",
+      "editable": [
+        "Impl.lean"
+      ],
+      "public_commands": [
+        "lake build Impl",
+        "lake build Public"
+      ],
+      "hidden_command": "lake build Impl && lake env lean -DwarningAsError=true /proof/Hidden.lean",
+      "sha256": {
+        "Contract.lean": "12cc4450c48ade1659f7824b49fc5129fdf7d2b130938bfd973ab1784f0ae0cf",
+        "Hidden.lean": "d49e3015d56c1784983b786ca5c28aa1b6a1a470d6e35067455382c2e204fb19",
+        "Public.lean": "947fa67f5c54a082381fe30ce9c6c653c8bde7c313ae5f26ffc678bbcaa33ba7",
+        "baseline.bundle": "09f5c973aa4578dec2da2275ff4fe89d106a256e7c0e560c51b406335985488b",
+        "fault.lean": "d814b846e962eb57f3ea114f2a2799bd050aa12250ee72e926bc5b4e472dd821",
+        "good.lean": "d10780300621139911189d6009612e71182db909558cebe2f3dc6b4c04b60026",
+        "prompt-A.md": "a23f242fec69634ad7d377830d95f09c0e69c614261aeb12aec5c9afe05dec65",
+        "prompt-B.md": "05bff9fd8dab8b973cc3345fb518e0a1a66d8c66c350e170fd37308580c0e03e",
+        "prompt-C.md": "da77e7fd1948b18290dbe0876be959f2708f000663fd230469916978392601b5",
+        "stub.lean": "afd48d10dbe14acc6efabea0177fd352b7b2b5f7b73b905b598fefbec4220ab8"
+      }
+    },
+    {
+      "task": "log-count",
+      "base_commit": "17257c5cfb23033ee174d78d7a732d8fe79ff5bf",
+      "editable": [
+        "Impl.lean"
+      ],
+      "public_commands": [
+        "lake build Impl",
+        "lake build Public"
+      ],
+      "hidden_command": "lake build Impl && lake env lean -DwarningAsError=true /proof/Hidden.lean",
+      "sha256": {
+        "Contract.lean": "bf03fd55e70e1eac77469f0156e86ae68868ad6d021534b02b7ca750c4a4302c",
+        "Hidden.lean": "f53700b0cf4392ed7b9232845d43941c53ad7d240d9bbefadeb685e36a99ea5c",
+        "Public.lean": "03aa1de9e22a43f293c7385fd8e154028f44686879ff0b74f1f5532c1d07a4d3",
+        "baseline.bundle": "a91cbe4fe9632c8ab84d27d59ca74ca15146e0bc3cfd05a74f4017fe572e098a",
+        "fault.lean": "f6be082df1b8c67d4bbaf1c3e2680fd85785c23f59f5362d47615f65e51c3f95",
+        "good.lean": "06346bafaf41bd2804287b44eeb871711fab6c1a82231bd1baedec3db2a80c2a",
+        "prompt-A.md": "31235388c0a83428fc96f223e7bd4761045c341974845ea6df9c49c3c59651c8",
+        "prompt-B.md": "e9be4cb112a460a2873e2c668d02f875043854cd13e5e8f7ed13e9175cdbc16d",
+        "prompt-C.md": "983a21bc2a504ce7d0586fe78be299466957552a79efaf9fc67881ff6df6a231",
+        "stub.lean": "07747db14833674be440715c2ef960e089c1e7d231cdef3b0b0cf5e84ae1107f"
+      }
+    },
+    {
+      "task": "minute",
+      "base_commit": "b2536fa3aec352cff506525606abe93aba4f6d7a",
+      "editable": [
+        "Impl.lean"
+      ],
+      "public_commands": [
+        "lake build Impl",
+        "lake build Public"
+      ],
+      "hidden_command": "lake build Impl && lake env lean -DwarningAsError=true /proof/Hidden.lean",
+      "sha256": {
+        "Contract.lean": "25fefe13d2ec9eb4adae65632910c9499d5a3ea858ab847df5d86cf3f6dae8d1",
+        "Hidden.lean": "3adf0a8e6e4d764ece3c798735c27e1642a207cecef0b9d8733824de6da4615b",
+        "Public.lean": "cb5b6d90d7df7df6407bb1c0ab11e2db72806922ac9456ebcae5654a22a9e921",
+        "baseline.bundle": "c29bce18a9eb082096113113acc5280483e9057c8fed46c5dcda83d70f8d019c",
+        "fault.lean": "ced931b79542aef9e1611dcccb8461b5e2e8e2b256c5a54f1aee1e4c7c59fa5d",
+        "good.lean": "c7d8d44fd5e32eaa2394b74f7de745a480a75b31d1bc23536f3848172cbaf64e",
+        "prompt-A.md": "ea5be2124398397cd38f5b3cb09662695d5361296d545b5f46e50b394d14f049",
+        "prompt-B.md": "cad4921fcfb7e5009060b209d12cada627b12f513e9ac7ace2c440128d008d2b",
+        "prompt-C.md": "74d3956cb71c7b643e089789d37a7713b06ccf79d47262f274cfeeb49783131d",
+        "stub.lean": "3c0ebfb19437d0d1f4321bdfc61b6b1eb143d635b7a7642107fa12e81e63f5b2"
+      }
+    },
+    {
+      "task": "interval",
+      "base_commit": "0b86de022ea9e7c536cab2102e4a9b6534a43dbd",
+      "editable": [
+        "Impl.lean"
+      ],
+      "public_commands": [
+        "lake build Impl",
+        "lake build Public"
+      ],
+      "hidden_command": "lake build Impl && lake env lean -DwarningAsError=true /proof/Hidden.lean",
+      "sha256": {
+        "Contract.lean": "bbb6a4aab5efd4f732aac665edbe8b7673ceb75df6db7d1f36fee7213a9daa1c",
+        "Hidden.lean": "2b7095bfdca6896727f0457f9ff1c9e977c38e2da92c6360b280f98e16a7794c",
+        "Public.lean": "d4d9e33e79141abe795c2bd460cb7b26ea91c5ea4126c7aec8e0157f7bfa0349",
+        "baseline.bundle": "25be8f45c655054ca744da341f3c7a4c5af00c4a3778b5973922b1c8ce654e8b",
+        "fault.lean": "2134133e3a5fd667e88ae649582c93685d8b1488a820bc21c34d3509945bb938",
+        "good.lean": "2c02c33c5b4bffdd06a28b28b9099522dd4abf04ac7d4a83a15680a0859a66ab",
+        "prompt-A.md": "76b65500e86e99ed398ee99a3bb8183dccfe0b445fe0392502d196b8b0bebae7",
+        "prompt-B.md": "f8cedfe2226f4729b1a958a54fd4beebb49acdb1a893a30f558174ca1fb8c75a",
+        "prompt-C.md": "054f23ae1c39af1d0ba67415dc2ab67a4fd253a1c186a8482609a4bcdeee6823",
+        "stub.lean": "5f16c69852568924cda715d8cdd25bfec4fb09d9e9c17f87e0059284f756cfb4"
+      }
+    },
+    {
+      "task": "dedup",
+      "base_commit": "f874d2581af6302fec98f33e8b3c0ba238b769a2",
+      "editable": [
+        "Impl.lean"
+      ],
+      "public_commands": [
+        "lake build Impl",
+        "lake build Public"
+      ],
+      "hidden_command": "lake build Impl && lake env lean -DwarningAsError=true /proof/Hidden.lean",
+      "sha256": {
+        "Contract.lean": "5074f0d1d7d996eb66888a60769f3576b0da87d845a785a3947989bcd72ecae0",
+        "Hidden.lean": "3564f120dd4c3010e8c0e35d4c044ab881eada727625f86b4b451eb2874b7a5f",
+        "Public.lean": "5241715bba84590fa7810f4bc8b66fbedd5fa43ea56132ce3375bee45f86ee7a",
+        "baseline.bundle": "06cc259a3181695e563887f960df79e35b88326b5d4c509bdc31469799d50e86",
+        "fault.lean": "67c17d80d92b7ac1bd3d319a3ad2ac604676752d6b5101e4b5ab2167794c157a",
+        "good.lean": "aab4fb7e377311d9b016aec0427c44e3c1b4dc9b89f0da4311a3e01fa0c577aa",
+        "prompt-A.md": "fdf4bf94f6a3106cab572bfb7592448bbce53b64c792b49369b0fe2c73e9b02b",
+        "prompt-B.md": "7dae42861cf120aea1efc800fe6d6bc7370f379ed612fb25b9941d73ce1c75ec",
+        "prompt-C.md": "d3f50ea505268320390811205681cf2a861557f6fb2701ae2dc3677bd54082cc",
+        "stub.lean": "99dcf1967479835592b7398b8a4c8d0a9c58393117a6eaf226d3cfbffb776d2b"
+      }
+    },
+    {
+      "task": "merge",
+      "base_commit": "4cf765850a4d3e44474962047d9bf88cf9942d9e",
+      "editable": [
+        "Impl.lean"
+      ],
+      "public_commands": [
+        "lake build Impl",
+        "lake build Public"
+      ],
+      "hidden_command": "lake build Impl && lake env lean -DwarningAsError=true /proof/Hidden.lean",
+      "sha256": {
+        "Contract.lean": "b9ad613ea1093e7baa6fe024664ee21456b0f56d0730dc67ec33d54ae982f0c0",
+        "Hidden.lean": "c6c8ca724eb0fc557bf5940ffe0c6c1d86366ceb24c8b99e80fe706df61ca85a",
+        "Public.lean": "c87217b923cb09b420850738b84c3e2312c73e77fc6f1303218d9d4711ad8a62",
+        "baseline.bundle": "063063f2b67f4340ae128de5f9a0e2955775bb5f7920050892773a166b9b04bc",
+        "fault.lean": "1daa832b366a59913945a11d7a5ab96ec948738a48909500b2ba7e4029f0e51f",
+        "good.lean": "540ce8b67b67a57720566af71ffae351c74b6983826589729fdff9194583b817",
+        "prompt-A.md": "0bb902efba367a02320c2445d7ca69d1872935028414791e79b666cd42d534b8",
+        "prompt-B.md": "44a99d90f56153fd8b3ce37fef0eaea93627a9a9152399dfdaecd14a758e4482",
+        "prompt-C.md": "520a775ba335695b5818788269ac8e014cb6a8135cc081aff173696e9237ac52",
+        "stub.lean": "1817b7a96adcc446486b50d23c53f639bfaaf4c808122901d92d433b049ac3fe"
+      }
+    },
+    {
+      "task": "state",
+      "base_commit": "aa934f632a1cf9efb4c46ea92f166e3fa89478d0",
+      "editable": [
+        "Impl.lean"
+      ],
+      "public_commands": [
+        "lake build Impl",
+        "lake build Public"
+      ],
+      "hidden_command": "lake build Impl && lake env lean -DwarningAsError=true /proof/Hidden.lean",
+      "sha256": {
+        "Contract.lean": "0f5239bb2bd790410cec34c3cbaf36584c98b4166b907c36a3c6f8234f2f5229",
+        "Hidden.lean": "485e2e4aa5235b11b9ba3e1a7de45ac37b9669d3f24e51e8c485fd2483979ced",
+        "Public.lean": "35b3619f766c9abdcf8ac7dff21596ae7fadf3fc43dcbc076a857535497a58d7",
+        "baseline.bundle": "6031206ed8d13770895390c2aff45e104452f5611e52c6ebbc2488cbd74889ad",
+        "fault.lean": "a1344cd141baed161c046655a68db4a936e9133f83fa47a03611149fc08d1ee8",
+        "good.lean": "c4ed7f248d18260415261fbd34eca7d60eed15ab1406377c599595630f530db6",
+        "prompt-A.md": "24b8adf8912800d92a47bd13e20b0d5f98f0ce3ea6906dc5491045fcdeac0b7c",
+        "prompt-B.md": "a265863000a4fff6ba8490eb88160acad3c45d0e29f243601ef74f4662336880",
+        "prompt-C.md": "c1fd321ab14889153509183cb9fa17bdd6820ed87584220321a20a0ed88f361c",
+        "stub.lean": "b23294a1b6dab8e228f55450a7c96872ae0173d3d9a43489610b40d1cf259201"
+      }
+    },
+    {
+      "task": "projection",
+      "base_commit": "160ed052e7de3633e1b40169cc006ec760c8095f",
+      "editable": [
+        "Impl.lean"
+      ],
+      "public_commands": [
+        "lake build Impl",
+        "lake build Public"
+      ],
+      "hidden_command": "lake build Impl && lake env lean -DwarningAsError=true /proof/Hidden.lean",
+      "sha256": {
+        "Contract.lean": "b82a876988521acb741377eb2a2486cb17df87a5542fd3a1342a1e9b95210aee",
+        "Hidden.lean": "da02034729ea34292302d31c1bd72476efbebf7ea04251cf5e06ecb273b5b221",
+        "Public.lean": "4f1a0d23431277b53b4de9bd50d02c191e4719c0216a9eb92e4343194514f0a8",
+        "baseline.bundle": "4d499e46d75f0fb5eee762ac7516c22cee8db0bf7388c87bee307adb9b0c72d7",
+        "fault.lean": "2150a4b32f38627448c62577b700a48ab24fdb1775a11f59bccdedf8de15c1d1",
+        "good.lean": "79ee8224c23e551c7cdaeb0ea799b8e4cfa32121542030448af36366f4cd4213",
+        "prompt-A.md": "d16748f466583057e3a001895ae42b5aeb16a439fab1c296043b504c443580a3",
+        "prompt-B.md": "ea2262b12d59c6fa18a204e186dcbab063dbd4f5d6e71b3ba62b3f79cb65c415",
+        "prompt-C.md": "ce566b0c1193d8296eb9da551488769356ecd9632a363110446078aef56839fc",
+        "stub.lean": "d565f527edfa89338bccf3ce603b0da96b67683f60f4d725f6617845a1491acd"
+      }
+    }
+  ],
+  "schedule": [
+    {
+      "task": "prefix",
+      "repetition": 5,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "minute",
+      "repetition": 3,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "interval",
+      "repetition": 4,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "merge",
+      "repetition": 3,
+      "arm_order": [
+        "C",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "task": "minute",
+      "repetition": 2,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "log-count",
+      "repetition": 4,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "dedup",
+      "repetition": 3,
+      "arm_order": [
+        "C",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "task": "dedup",
+      "repetition": 1,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "merge",
+      "repetition": 2,
+      "arm_order": [
+        "C",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "task": "prefix",
+      "repetition": 3,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "minute",
+      "repetition": 5,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "log-count",
+      "repetition": 3,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "projection",
+      "repetition": 3,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "state",
+      "repetition": 3,
+      "arm_order": [
+        "B",
+        "A",
+        "C"
+      ]
+    },
+    {
+      "task": "merge",
+      "repetition": 1,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "merge",
+      "repetition": 5,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "log-count",
+      "repetition": 2,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "state",
+      "repetition": 2,
+      "arm_order": [
+        "C",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "task": "dedup",
+      "repetition": 5,
+      "arm_order": [
+        "C",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "task": "minute",
+      "repetition": 1,
+      "arm_order": [
+        "C",
+        "A",
+        "B"
+      ]
+    },
+    {
+      "task": "projection",
+      "repetition": 1,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "interval",
+      "repetition": 1,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "projection",
+      "repetition": 5,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "prefix",
+      "repetition": 1,
+      "arm_order": [
+        "B",
+        "A",
+        "C"
+      ]
+    },
+    {
+      "task": "log-count",
+      "repetition": 5,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "projection",
+      "repetition": 4,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "log-count",
+      "repetition": 1,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "state",
+      "repetition": 5,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "dedup",
+      "repetition": 2,
+      "arm_order": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "task": "projection",
+      "repetition": 2,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "interval",
+      "repetition": 5,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "interval",
+      "repetition": 3,
+      "arm_order": [
+        "B",
+        "A",
+        "C"
+      ]
+    },
+    {
+      "task": "prefix",
+      "repetition": 4,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "task": "dedup",
+      "repetition": 4,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "merge",
+      "repetition": 4,
+      "arm_order": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "task": "interval",
+      "repetition": 2,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "prefix",
+      "repetition": 2,
+      "arm_order": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "task": "minute",
+      "repetition": 4,
+      "arm_order": [
+        "B",
+        "A",
+        "C"
+      ]
+    },
+    {
+      "task": "state",
+      "repetition": 4,
+      "arm_order": [
+        "B",
+        "A",
+        "C"
+      ]
+    },
+    {
+      "task": "state",
+      "repetition": 1,
+      "arm_order": [
+        "C",
+        "B",
+        "A"
+      ]
+    }
+  ],
+  "serving_evidence_sha256": "3ee2cbbb3fa877d0b1c02765d5b62396a8ebb80d309eb53cda3abe150e7315eb"
+}

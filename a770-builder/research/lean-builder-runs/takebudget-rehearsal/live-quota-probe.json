@@ -1,0 +1,13 @@
+[
+  {
+    "rendered_prompt_tokens": 247,
+    "completion_grant": 1,
+    "prompt_tokens": 247,
+    "completion_tokens": 1,
+    "status": "settled"
+  },
+  {
+    "status": "quota_exhausted",
+    "rendered_prompt_tokens": 247
+  }
+]
